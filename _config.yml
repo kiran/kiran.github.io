@@ -1,0 +1,12 @@
+url: http://writings.kiranbot.com
+permalink: pretty
+pygments: true
+exclude: ['Gemfile', 'CNAME', 'README.markdown']
+
+defaults:
+  -
+    scope:
+      path: ""
+      type: "post"
+    values:
+      layout: "post"
