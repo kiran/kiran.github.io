@@ -1,6 +1,7 @@
 url: http://writings.kiranbot.com
 permalink: pretty
 pygments: true
+markdown: kramdown
 exclude: ['Gemfile', 'CNAME', 'README.markdown']
 
 defaults:

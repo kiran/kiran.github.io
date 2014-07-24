@@ -1,6 +1,7 @@
 ---
-layout: post
 title: Sparkling everything - setting up a home carbonation system
+layout: "post"
+permalink: carbonation
 ---
 
 ![Carbonation Setup](/images/carbonation_setup.jpg){: .inline-img}
