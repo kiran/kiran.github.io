@@ -4,7 +4,7 @@ layout: "post"
 permalink: carbonation
 ---
 
-![Carbonation Setup](/images/carbonation_setup.jpg){: .inline-img}
+![Carbonation Setup](/images/home-carbonation/carbonation_setup.jpg){: .inline-img}
 
 I've developed a love for carbonated water lately, where I go through 3-4 cans of seltzer a day. This was ridiculous -- something needed to change.
 
