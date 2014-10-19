@@ -1,0 +1,62 @@
+---
+title: SPACESHIP (another belladone)
+layout: "post"
+permalink: spaceship-belladone
+---
+
+I am beyond pleased with this dress! This actually fits! It fits so well!
+
+![Belladone Front](/images/space-belladone/front.jpg){: .inline-img}
+
+Also, it's covered in little spaceships and formulas for deriving orbital
+velocities.
+
+The Stripe systems team has a weekly sync-up that we call "SPACESHIP," after watching the
+lego movie. I can't wait to take my spaceship dress to a SPACESHIP.
+
+![Belladone Front](/images/space-belladone/space-fabric.jpg){: .inline-img}
+
+I've been flipping through [Roisin's blog](http://dollyclackett.blogspot.com/),
+and am seriously coveting all of the amazing patterns and designs she puts together.
+(I feel weird referring to all of these famous sewing bloggers by first name, but
+I'm not sure that calling her "dollyclackett" would be any less strange.)
+One late night, I ended up looking for fabric stores online,
+and stumbled on [Stash Fabrics](http://www.stashfabrics.com).
+
+Fifteen minutes in, I was hooked. Their selection's amazing! They have the most
+adorable prints and colors and organization. Icing on the cake? They're a Stripe
+merchant! (I swear they're not paying me, unless you count the Stripe processing
+fees.)
+
+I was a little worried about the "quilting weight" cotton -- I've only ever seen
+this to mean nearly transparent fabric with a poor hand and drape. This cotton is
+amazing! I have 5 more yards in different patterns, from different designers that
+I can't wait to cut into.
+
+**Fabric** // Quilting weight cotton designed by Riley Blake Designs from [Stash Fabrics](http://www.stashfabrics.com/fabric/details/october-afternoon/rocket-age/rocket-blast-in-navy)
+
+**Pattern** // Deer and Doe's [Belladone](http://boutique.deer-and-doe.fr/2-dresses-belladone-dress.html)
+
+## Adjustments
+
+### Cinching the waist
+
+  I graded down the side seams on the front bodice by about an inch or two. I really
+  wish I had done this on a muslin, or on the pattern pieces, because this fits incredibly
+  well, and I have no way of reproducing this fit reliably. :(
+
+  I decreased the front waistband pieces to compensate for the bodice, and took an inch off
+  the side seams on the front skirt pieces.
+
+### Decreasing the size of the back
+
+  I increased the width of the back skirt darts to fit the smaller back waistband. Success!
+  No weird bunching at the zipper!
+  I also had to take off a half inch on the back seams of the skirt, since I didn't measure
+  the dart correctly.
+  Wow. Much math. Very science.
+
+
+## Skills learned:
+
+- none, but perfected many of the skills from the first Belladone
