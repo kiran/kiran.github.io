@@ -8,7 +8,7 @@ I'm super pleased with this dress! I made this to wear to work, mostly, and I
 felt like a superhero telling people that I made it. It's a very comfortable
 dress, but it ended up with a little more ease than I'd like. (More on that later.)
 
-![Belladone Front](/images/first-belladone/front.jpg){: .inline-img}
+{% img left /images/first-belladone/front.jpg Belladone Front %}
 
 (Sorry for the awful picture quality -- it's a camera phone at night. I'll do better
 next time, when I actually have time to take photos!)

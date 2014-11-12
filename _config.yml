@@ -1,13 +1,11 @@
-url: http://writings.kiranbot.com
-permalink: pretty
-pygments: true
-markdown: kramdown
-exclude: ['Gemfile', 'CNAME', 'README.markdown']
+# Site settings
+title: Kiran Bhattaram
+description: >
+  An occasional blog about making things. Often programming and sewing.
+baseurl: "" # the subpath of your site, e.g. /blog/
+url: "http://www.kiranbot.com" # the base hostname & protocol for your site
+twitter_username: kiranb
+github_username:  kiran
 
-defaults:
-  -
-    scope:
-      path: ""
-      type: "post"
-    values:
-      layout: "post"
+# Build settings
+markdown: kramdown
