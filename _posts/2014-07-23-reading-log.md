@@ -2,6 +2,7 @@
 title: Summer Reading Log
 layout: "post"
 permalink: summer-reading-log-2014
+thumbnail: /images/summer-reading-log-2014/thumbnail.jpg
 ---
 
 It's been a while since I've attempted to keep a reading journal, so here goes.

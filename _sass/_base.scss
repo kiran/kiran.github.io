@@ -35,7 +35,11 @@ ul, ol, dl, figure,
     margin-bottom: $spacing-unit / 2;
 }
 
-
+article.post-preview {
+    overflow: hidden;
+    border-bottom: 1px solid #fafafa;
+    padding: 27px 18px;
+}
 
 /**
  * Images
@@ -45,7 +49,14 @@ img {
     vertical-align: middle;
 }
 
-
+img.thumbnail {
+    height: 150px;
+    width: 150px;
+    border-radius: 40px;
+    background-size: cover;
+    margin-right: 36px;
+    float: left;
+}
 
 /**
  * Figures

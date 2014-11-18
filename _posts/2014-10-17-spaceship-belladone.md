@@ -2,6 +2,7 @@
 title: SPACESHIP (another belladone)
 layout: "post"
 permalink: spaceship-belladone
+thumbnail: /images/space-belladone/thumbnail.jpg
 ---
 
 {% img right /images/space-belladone/front.jpg 300 Space Belladone %}

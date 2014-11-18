@@ -4,6 +4,7 @@ subtitle: a messenger bag with bright LEDs
 layout: "post"
 permalink: led-messenger-bag
 tags: [electronics, wearables]
+thumbnail: /images/LED-messenger-bag/thumbnail.jpg
 ---
 
 {% img /images/LED-messenger-bag/in_action.jpg Lights in Action %}
