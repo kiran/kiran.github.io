@@ -3,6 +3,8 @@ title: Sparkling everything - setting up a home carbonation system
 layout: "post"
 permalink: carbonation
 thumbnail: /images/home-carbonation/thumbnail.jpg
+category: recipes
+tags: [soda, food and drink]
 ---
 
 {% img right /images/home-carbonation/carbonation_setup.jpg 250 Carbonation Setup %} I've developed a love for carbonated water lately, where I go through 3-4 cans of seltzer a day. This was ridiculous -- something needed to change.

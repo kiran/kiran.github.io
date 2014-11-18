@@ -3,6 +3,8 @@ title: First Belladone Dress
 layout: "post"
 permalink: first-belladone-dress
 thumbnail: /images/first-belladone/thumbnail.jpg
+category: sewing
+tags: [deer and doe, belladone, sewing]
 ---
 
 I'm super pleased with this dress! I made this to wear to work, mostly, and I

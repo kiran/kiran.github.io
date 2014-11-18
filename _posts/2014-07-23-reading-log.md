@@ -3,6 +3,8 @@ title: Summer Reading Log
 layout: "post"
 permalink: summer-reading-log-2014
 thumbnail: /images/summer-reading-log-2014/thumbnail.jpg
+category: reading
+tags: [books]
 ---
 
 It's been a while since I've attempted to keep a reading journal, so here goes.
