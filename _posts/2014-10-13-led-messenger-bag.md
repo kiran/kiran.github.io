@@ -6,7 +6,7 @@ permalink: led-messenger-bag
 tags: [electronics, wearables]
 ---
 
-{% img left /images/LED-messenger-bag/in_action.jpg Lights in Action %}
+{% img /images/LED-messenger-bag/in_action.jpg Lights in Action %}
 
 At Grace Hopper this year, I stumbled on a party hosted by
 Google/Women Techmakers, working with a local hackerspace. They were handing

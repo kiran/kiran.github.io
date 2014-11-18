@@ -8,7 +8,7 @@ I'm super pleased with this dress! I made this to wear to work, mostly, and I
 felt like a superhero telling people that I made it. It's a very comfortable
 dress, but it ended up with a little more ease than I'd like. (More on that later.)
 
-{% img left /images/first-belladone/front.jpg Belladone Front %}
+{% img left /images/first-belladone/front.jpg 200 Belladone Front %}
 
 (Sorry for the awful picture quality -- it's a camera phone at night. I'll do better
 next time, when I actually have time to take photos!)
@@ -47,6 +47,7 @@ seeing the issue in all the ready-to-wear clothes I own! In the future, I know t
 cut the muslin down while the darts are still basted -- I ended up with a wonky bottom
 seam in the end. :/
 
+{% img right /images/first-belladone/back.jpg 200 Belladone Back %}
 
 ### Shoulder/back piece sizing
 
@@ -55,8 +56,6 @@ quite so big. I followed [Lauren's advice (on lladybird)](http://lladybird.com/2
 to fix this, described near the end of the post.
 
   I think the back pieces fit pretty well now, though! Ignore the bunching at the zipper, please :(.
-
-![Belladone Front](/images/first-belladone/back.jpg){: .inline-img}
 
 ### Larger pockets
 

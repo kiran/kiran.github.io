@@ -4,9 +4,7 @@ layout: "post"
 permalink: carbonation
 ---
 
-![Carbonation Setup](/images/home-carbonation/carbonation_setup.jpg){: .inline-img}
-
-I've developed a love for carbonated water lately, where I go through 3-4 cans of seltzer a day. This was ridiculous -- something needed to change.
+{% img right /images/home-carbonation/carbonation_setup.jpg 250 Carbonation Setup %} I've developed a love for carbonated water lately, where I go through 3-4 cans of seltzer a day. This was ridiculous -- something needed to change.
 
 I spent a while contemplating buying a Sodastream, but frequent (and expensive) refills of CO2 cartridges didn't seem like a satisfying answer. Also, only being able to carbonate water took most of the fun out of having a sparkling water machine.
 

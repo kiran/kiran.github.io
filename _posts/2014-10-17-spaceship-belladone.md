@@ -4,9 +4,9 @@ layout: "post"
 permalink: spaceship-belladone
 ---
 
-I am beyond pleased with this dress! This actually fits! It fits so well!
+{% img right /images/space-belladone/front.jpg 300 Space Belladone %}
 
-![Belladone Front](/images/space-belladone/front.jpg){: .inline-img}
+I am beyond pleased with this dress! This actually fits! It fits so well!
 
 Also, it's covered in little spaceships and formulas for deriving orbital
 velocities.
@@ -14,24 +14,21 @@ velocities.
 The Stripe systems team has a weekly sync-up that we call "SPACESHIP," after watching the
 lego movie. I can't wait to take my spaceship dress to a SPACESHIP.
 
-![Belladone Front](/images/space-belladone/space-fabric.jpg){: .inline-img}
-
 I've been flipping through [Roisin's blog](http://dollyclackett.blogspot.com/),
 and am seriously coveting all of the amazing patterns and designs she puts together.
-(I feel weird referring to all of these famous sewing bloggers by first name, but
-I'm not sure that calling her "dollyclackett" would be any less strange.)
 One late night, I ended up looking for fabric stores online,
 and stumbled on [Stash Fabrics](http://www.stashfabrics.com).
 
 Fifteen minutes in, I was hooked. Their selection's amazing! They have the most
 adorable prints and colors and organization. Icing on the cake? They're a Stripe
-merchant! (I swear they're not paying me, unless you count the Stripe processing
-fees.)
+merchant!
 
 I was a little worried about the "quilting weight" cotton -- I've only ever seen
 this to mean nearly transparent fabric with a poor hand and drape. This cotton is
 amazing! I have 5 more yards in different patterns, from different designers that
 I can't wait to cut into.
+
+{% img /images/space-belladone/space-fabric.jpg Space Belladone %}
 
 **Fabric** // Quilting weight cotton designed by Riley Blake Designs from [Stash Fabrics](http://www.stashfabrics.com/fabric/details/october-afternoon/rocket-age/rocket-blast-in-navy)
 
