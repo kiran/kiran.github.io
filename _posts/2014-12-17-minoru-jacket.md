@@ -9,7 +9,7 @@ tags: [sewaholic, minoru, sewing]
 
 I finally finished my painfully orange Minoru! I've wanted a warm cycling jacket for
 a while now, and an impending trip to Boston in the winter seemed like the perfect
-impetus to start sewing.
+impetus to start sewing. It looks perfectly sunny outside here, but it's also 15ºF. o__O
 
 {% img left /images/minoru-jacket/front.jpg Minoru Front %}
 
@@ -42,7 +42,7 @@ out where the band should go in tailor's chalk.
 The process was a little nerve-wracking, since I wasn't being particularly careful about keeping
 anything straight or measured. I'm pretty glad it worked out in the end.
 
-{% img left /images/minoru-jacket/elastic-ribbon.jpg 300 Elastic tied to Ribbon %}
+{% img right /images/minoru-jacket/elastic-ribbon.jpg 300 Elastic tied to Ribbon %}
 
 I had some difficulty threading the elastic through the casing, given how tight the casing ended up,
 so I ended up threading through some ribbon, tying that to the elastic, and pulling the elastic through.
@@ -54,6 +54,8 @@ so I ended up threading through some ribbon, tying that to the elastic, and pull
 I drafted welt pockets large enough to hold my kindle, using [this tutorial]. Unfortunately, I had a brainfart and put in the welts slanting the wrong way! After some grumping and worrying about scrounging up enough fabric, I ended up adding in side seam pockets, too. This jacket now has 4 giant, warm pockets!
 An unexpected advantage of putting in the welt pockets the wrong way is that things in the pockets 
 don't spill their contents when I'm on a bicycle.
+
+{% img right /images/minoru-jacket/floor.jpg 200 Minoru Front %}
 
 ### Lining the hood and collar pieces
 
