@@ -3,6 +3,7 @@ title: Spaceflower Swimsuit
 layout: "post"
 permalink: spaceflower-swimsuit
 thumbnail: /images/spaceflower-swimsuit/thumbnail.jpg
+category: sewing
 tags: [sewing]
 ---
 

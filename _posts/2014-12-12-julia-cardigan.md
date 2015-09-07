@@ -3,6 +3,7 @@ title: Julia Cardigan
 layout: "post"
 permalink: julia-cardigan
 thumbnail: /images/julia-cardigan/thumbnail.jpg
+category: sewing
 tags: [sewing]
 ---
 

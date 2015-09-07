@@ -2,6 +2,7 @@
 title: SPACESHIP (another belladone)
 layout: "post"
 permalink: spaceship-belladone
+category: sewing
 thumbnail: /images/space-belladone/thumbnail.jpg
 ---
 

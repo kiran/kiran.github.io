@@ -3,7 +3,7 @@ title: LED Messenger Bag
 subtitle: a messenger bag with bright LEDs
 layout: "post"
 permalink: led-messenger-bag
-category: electronics
+category: [electronics, sewing]
 tags: [electronics, wearables, sewing]
 thumbnail: /images/LED-messenger-bag/thumbnail.jpg
 ---

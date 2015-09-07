@@ -3,6 +3,7 @@ title: Bicycle Belladone
 layout: "post"
 permalink: bicycle-belladone
 thumbnail: /images/bicycle-belladone/thumbnail.jpg
+category: sewing
 tags: [sewing]
 ---
 
