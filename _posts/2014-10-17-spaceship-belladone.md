@@ -5,7 +5,7 @@ permalink: spaceship-belladone
 thumbnail: /images/space-belladone/thumbnail.jpg
 ---
 
-{% img right /images/space-belladone/front.jpg 300 Space Belladone %}
+{% img right /images/space-belladone/front-again.jpg Space Belladone %}
 
 I am beyond pleased with this dress! This actually fits! It fits so well!
 
@@ -19,6 +19,8 @@ I've been flipping through [Roisin's blog](http://dollyclackett.blogspot.com/),
 and am seriously coveting all of the amazing patterns and designs she puts together.
 One late night, I ended up looking for fabric stores online,
 and stumbled on [Stash Fabrics](http://www.stashfabrics.com).
+
+{% img right /images/space-belladone/front.jpg 300 Space Belladone %}
 
 Fifteen minutes in, I was hooked. Their selection's amazing! They have the most
 adorable prints and colors and organization. Icing on the cake? They're a Stripe
