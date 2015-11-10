@@ -104,7 +104,7 @@ Brewer also mentions that most systems set up a staging area to perform upgrades
 [dynamo-sqs]: https://aws.amazon.com/message/5467D2/#Impact_on_Other_Services
 [ebs]: https://aws.amazon.com/message/2329B7/
 [ebs-2]: https://aws.amazon.com/message/680342/
-[giant-scale]: link
+[giant-scale]: http://www.cs.berkeley.edu/~brewer/Giant.pdf
 [harvest-yield]: /harvest-yield
 [harvest-yield-heading]: /harvest-yield/#harvest-yield-definition
 [blue-green-deploys]: http://martinfowler.com/bliki/BlueGreenDeployment.html
