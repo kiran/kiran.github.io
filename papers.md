@@ -10,7 +10,9 @@ I'm trying to read papers more regularly. Here's a list of what I've read so far
 
   tl;dr: characterize graceful degradation mechanisms in terms of harvest (the fraction of data reflected in the response) and yield (the probability of completing a request)
 
-- Lessons from Giant-Scale Services, Brewer
+- [Lessons from Giant-Scale Services](/brewer-giant-scale-services), Brewer
+  
+  tl;dr: data per query is inversely proportional to queries per second at the limits of scale. Use this to inform your capacity planning and load-shedding plans.
 
 - CAP Twelve Years Later: How the "Rules" Have Changed
 

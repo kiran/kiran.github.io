@@ -2,6 +2,7 @@
 title: (Paper report) Harvest/Yield
 layout: "post"
 permalink: harvest-yield
+category: computers
 tags: [papers, distributed-systems]
 ---
 
@@ -21,7 +22,7 @@ The easiest/default error-handling setup degrades the system entirely (affecting
 
 It's really easy to point to the CAP theorem and assert that systems can't have both strong consistency and availability, ending the discussion there. While some systems absolutely can't tolerate imperfect/degraded answers, there are a wide variety of systems that can tolerate some other point on the consistency spectrum, especially for queries. Clearly defining consistency/availability goals, especially for a system composed of many independent services, is crucial to improving availability.
 
-Given this need, the authors define 2 metrics for correct behavior in a distributed system:
+<div id='harvest-yield-definition'>Given this need, the authors define 2 metrics for correct behavior in a distributed system:</div>
 
 1. yield = requests completed successfully / total requests
   - note: yield is related to uptime, but deals with the number of queries missed, not just time down. (Being down for 10 minutes on Cyber Monday is not the same as being down for 10 minutes at 3 AM on a Tuesday.)
