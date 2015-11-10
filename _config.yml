@@ -1,7 +1,6 @@
 # Site settings
 title: Kiran Bhattaram
-description: >
-  An occasional blog about making things. Often programming and sewing.
+description: An occasional blog about making things. Often programming and sewing.
 baseurl: "" # the subpath of your site, e.g. /blog/
 url: "http://www.kiranbot.com" # the base hostname & protocol for your site
 twitter_username: kiranb
@@ -10,4 +9,6 @@ disqus_shortname: kiranbot
 
 # Build settings
 markdown: kramdown
+
+kramdown:
   auto_ids: true
