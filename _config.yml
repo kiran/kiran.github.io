@@ -10,3 +10,4 @@ disqus_shortname: kiranbot
 
 # Build settings
 markdown: kramdown
+  auto_ids: true
