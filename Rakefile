@@ -1,5 +1,6 @@
 # Rquire jekyll to compile the site.
 require "jekyll"
+require "pry"
 
 # Github pages publishing.
 namespace :blog do
@@ -46,5 +47,47 @@ namespace :blog do
     end
 
     # Done.
+  end
+
+  def resize name, w, h
+    sh %{mogrify -resize #{MAX_GEOMETRY[:w]}x#{MAX_GEOMETRY[:h]} '#{name}'}
+  end
+
+  MAX_GEOMETRY = { w: 1280.0, h: 960.0 }
+  namespace :jpeg do
+    task :list do
+      @jpgs = Dir.glob("**/*.jpg") - Dir.glob("_site/**/*.jpg")
+    end
+
+    desc "Scale down images to max geometry allowed"
+    task :resize => :list do
+      files= { }
+
+      @jpgs.each do |jpg|
+        IO.popen "identify '#{jpg}'" do |p|
+          f = p.read
+          name,bla,size = f.split(/ /)
+          name.sub!(/jpg\[\d+\]$/, 'jpg')
+          w,h = size.split('x').map(&:to_i)
+          next unless name && w && h
+          if w > MAX_GEOMETRY[:w] || h > MAX_GEOMETRY[:h]
+            previous_size = File.size?(name)
+
+            resize(name, w, h)
+
+            size = File.size?(name)
+            reduction = ((previous_size-size)*100.0/previous_size)
+            puts "size reduction of %d; resizing #{name}" % reduction
+          end
+        end
+      end
+    end
+
+    desc "Compress JPEG images"
+    task :minimize => :list do
+      @jpgs.each do |f|
+        sh "jpegoptim --strip-all --totals -o '#{f}'"
+      end
+    end
   end
 end
