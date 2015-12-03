@@ -14,7 +14,9 @@ I'm trying to read papers more regularly. Here's a list of what I've read so far
   
   tl;dr: data per query is inversely proportional to queries per second at the limits of scale. Use this to inform your capacity planning and load-shedding plans.
 
-- CAP Twelve Years Later: How the "Rules" Have Changed
+- [CAP Twelve Years Later: How the "Rules" Have Changed](/cap-twelve-years-later), Brewer
+
+  tl;dr: the CAP principle has no nuance, but real systems do. The paper describes methods of handling partitions and ensuring eventual causal consistency.
 
 - Towards robust distributed systems, Brewer's 2000 PODC keynote.
 
