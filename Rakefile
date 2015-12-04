@@ -89,5 +89,10 @@ namespace :blog do
         sh "jpegoptim --strip-all --totals -o '#{f}'"
       end
     end
+
+    desc "Do all the image processing"
+    task :compress => [:resize, :minimize, :list] do
+      puts "Finished image processing"
+    end
   end
 end

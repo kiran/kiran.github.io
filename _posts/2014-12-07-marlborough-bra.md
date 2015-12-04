@@ -9,7 +9,7 @@ tags: [sewing, knits, bra]
 
 I've gone mad with power! I've made a bra!
 
-{% img /images/jade-marlborough-bra/floor.jpg Marlborough Bra %}
+{% img /images/jade-marlborough-bra/front.jpg Marlborough Bra %}
 
 And it fits fairly well, which is impressive for a wearable muslin. This is definitely the most technically difficult thing I've made on my own (I had lots of help with the corset I made). I'm suuuuper pleased right now -- no more $70 bras!
 
@@ -19,13 +19,11 @@ I kind of jumped the gun on this bra, though! I haven't really done all the rese
 
 My materials are from [Hooks and Wires](https://www.etsy.com/shop/Summerset). The kit's lovely, and very well-priced -- with shipping, it came to $24, all told. A note: the kits come with bra strapping, which is ~barely enough for this pattern. I shortened the amount the straps overlap on the back band, and I also have freakishly narrow/tiny shoulders, so it worked for me. The materials aren't quite right for the Marlborough bra, though; the pattern was designed for a fabric with no stretch, and all the fabrics in this kit are slightly stretchy. That said, I think all the fabric in the kit is stable enough to work with the Marlborough bra, since the stretch isn't that high. I stabilized the fabric in places, either by doubling, underlining (the frame is powernet underlined with the slightly stretchy cup mesh), or interfacing (the bridge is interfaced powernet), and it came out lovely! I'm not a very small size (30F in RTW, 32DD in the Marlborough), and the bra is perfectly supportive.
 
-I wasn't really sure how to model this, so here's a lumpy pillow:
-
-{% img /images/jade-marlborough-bra/pillow-side.jpg Pillow Bra! %}
+{% img /images/jade-marlborough-bra/side.jpg Pillow Bra! %}
 
 Speaking of sizing -- based on my measurements, I initially cut a 32D. I wear a 30F in RTW, so I didn't quite believe this. A quick mock-up in leftover fabric scraps confirmed this, so I went up a cup size. I also ended up lengthening the back bands by ~3/4" each, after comparing the pattern's band to my favorite RTW bra. The fit was still kind of a gamble, since the muslin fabrics don't have the same stretch or mechanical give that my fashion fabrics do. That said, the fit is pretty fantastic -- there's a minimal amount of gapping on the sides of the cup, but it's perfect otherwise! The stretch materials probably helped with that a tiny bit, though. :) I'm also happy with the way it fits under clothes -- since the fabric is fairly thick, it's somewhere between a lace bra and a foam-dome one.
 
-{% img /images/jade-marlborough-bra/pillow-front.jpg Pillow Bra! %}
+{% img /images/jade-marlborough-bra/closer-front.jpg Pillow Bra! %}
 
 I'm pretty hooked (heh) on making these! I think it's probably the one item of clothing where the RTW price ($100) to the effort and materials it takes to make ($20 + 5 hours) makes handmade definitely worth it. I love Summerset's Hooks and Wires kits, and definitely want more. I think she's out on vacation until October 2015, though, which is really sad. :(
 
