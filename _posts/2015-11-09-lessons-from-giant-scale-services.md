@@ -11,25 +11,17 @@ tags: [papers, distributed-systems]
 - Eric Brewer. [Lessons from Giant-Scale Services][giant-scale]. (IEEE Computer, 2001)
   - tl;dr: data per query is inversely proportional to queries per second at the limits of scale. Use this to inform your capacity planning and load-shedding plans.
 
-This is an experience paper from Eric Brewer (of the CAP theorem!) about his experiences working with large systems. Though the paper is from 2001, the basic tradeoffs of the systems he describes have not really changed since.
+This is a paper from Eric Brewer (of the CAP theorem) summarizing his experiences working with large systems. Though the paper is from 2001, the basic tradeoffs of the systems he describes have not really changed since.
 
 The most interesting insight of this paper is the DQ principle, which is related to the principles discussed in the [harvest/yield][harvest-yield] paper:
 
 - (data per query) x (queries per second) &rarr; constant.
 
-This is kind of a grab-bag of ideas, but I think the key insight is using the DQ principle to evaluate graceful degradation strategies.
+This paper is kind of a grab-bag of ideas, but I think the key insight is using the DQ principle to evaluate graceful degradation strategies.
 
 ## Measuring availability (harvest/yield)
 
-Uptime, or the amount of time a site handles traffic, is the traditional metric of availability. Relating uptime to mean-time-between-failure (MTBF) and mean-time-to-repair (MTTR):
-
-- uptime = (MTBF - MTTR)/MTBF
-
-> you can improve uptime either by reducing the frequency of failures, or reducing the time to fix them. Although the former is more pleasing aesthetically, the latter is much easier to accomplish with evolving systems.
-
-In other words, it's just as important to assume failures and improve tooling around debugging and recovery as it is to program defensively and attempt to prevent failures in the first place. In fact, given that new features often reduce MTBF without affecting MTTR much, it's easier to focus on improving time to recovery. TKTKTK note about how complex systems fail
-
-> Acceptable quality comes down to software the provides a target MTBF, a low MTTR, and no cascading failures.
+Uptime, or the amount of time a site handles traffic, is the traditional metric of availability.
 
 As a better set of availability metrics, Brewer reiterates the harvest/yield metrics, discussed [here previously][harvest-yield-heading].
 
@@ -93,9 +85,34 @@ There are three main approaches to upgrades:
 
 Brewer also mentions that most systems set up a staging area to perform upgrades, making rollbacks easy. This, in combination with the big flip, sounds a lot like [blue-green deploys][blue-green-deploys].
 
+## A note about observability/recovery systems
+
+Relating uptime to mean-time-between-failure (MTBF) and mean-time-to-repair (MTTR):
+
+- uptime = (MTBF - MTTR)/MTBF
+
+> you can improve uptime either by reducing the frequency of failures, or reducing the time to fix them. Although the former is more pleasing aesthetically, the latter is much easier to accomplish with evolving systems.
+
+In other words, it's just as important to assume failures and improve tooling around debugging and recovery as it is to program defensively and attempt to prevent failures in the first place. In fact, given that new features often reduce MTBF without affecting MTTR much, it's easier to focus on improving time to recovery.
+
+There's a bit about this in ["How Complex Systems Fail"][how-complex-systems-fail], on how change constantly introduces new forms of failure, which often interact with each other in unexpected ways to cause failure. Essentially -- it's easier to improve observability, debugging tools, and recovery systems (circuit breakers, etc) than it is to solely prevent failures.
+
+> Acceptable quality comes down to software the provides a target MTBF, a low MTTR, and no cascading failures.
+
+## Related Papers (where to go from here)
+
+Happy to hear suggestions!
+
+- [How Complex Systems Fail.][how-complex-systems-fail]. Richard I. Cook.
+  - This is an _incredibly_ spot-on paper about systems failures. It also motivates blameless postmortems very effectively.
+- [Towards Robust Distributed Systems][podc-keynote]. Eric Brewer.
+  - A fairly broad summary of the CAP theorem, harvest/yield, the DQ principle, and how those might apply to system design.
+- [Harvest, Yield, and Scalable Tolerant Systems](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.24.3690&rep=rep1&type=pdf). Brewer & Fox.
+  - Elaborates on the harvest/yield metrics.
+
 ## footnotes
 
-[^1]: This is true only for data-intensive sites. If the system is computationally-bound, or bottlenecked by external systems, there's not much improving DQ can do.
+[^1]: This is true only for data-intensive sites. If the system is computationally-bound, or bottlenecked by external systems, there's not much improving DQ can do. Most large services tend to be data-bound, though.
 
 [^2]: I'd give a small fortune for a dependency graph of their systems.<br>SQS and Auto-Scaling groups [are dependent on DynamoDB][dynamo-sqs]. ELB and RDS [depend on EBS][ebs] ([again][ebs-2]). What else?
 
@@ -108,3 +125,5 @@ Brewer also mentions that most systems set up a staging area to perform upgrades
 [harvest-yield]: /harvest-yield
 [harvest-yield-heading]: /harvest-yield/#harvest-yield-definition
 [blue-green-deploys]: http://martinfowler.com/bliki/BlueGreenDeployment.html
+[how-complex-systems-fail]: http://web.mit.edu/2.75/resources/random/How%20Complex%20Systems%20Fail.pdf
+[podc-keynote]: https://www.cs.berkeley.edu/~brewer/cs262b-2004/PODC-keynote.pdf
