@@ -18,7 +18,7 @@ I'm trying to read papers more regularly. Here's a list of what I've read so far
 
   tl;dr: the CAP principle has no nuance, but real systems do. The paper describes methods of handling partitions and ensuring eventual causal consistency.
 
-- "What Goes Around Comes Around", Stonebraker & Hellerstein, 2005. [[pdf]](https://mitpress.mit.edu/sites/default/files/titles/content/9780262693141_sch_0001.pdf)
+- [What Goes Around Comes Around](/what-goes-around-comes-around), Stonebraker & Hellerstein, 2005. [[pdf]](https://mitpress.mit.edu/sites/default/files/titles/content/9780262693141_sch_0001.pdf)
 
   tl;dr: A summary of 35 years of database systems' data models, grouped loosely into 9 eras. It's fascinating as a historical record, written with a bunch of opinions and wry humor. The authors describe the historical context of each data model, and often select a representative implementation to discuss. Each section ends with a set of lessons learned during that historical period.
 
