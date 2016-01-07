@@ -2,7 +2,6 @@
 title: 2014 TV/Media Log
 layout: "post"
 permalink: 2014-reading-log
-thumbnail: /images/2014-reading-log/thumbnail.png
 category: reading
 tags: [media, tv, film]
 ---
@@ -35,7 +34,7 @@ tags: [media, tv, film]
 - After Tiller
   - fantastic abortion documentary. all the feels.
 
-## Film
+## Movies
 - Dear White People
 - The Fall
 - Persepolis
@@ -59,8 +58,21 @@ tags: [media, tv, film]
 - Kahaani
 - Frances Ha
 - Once Upon a Time in Anatolia
+- Anna Karenina
+- The Lunchbox
+- Secretary
+- Predator
+- Syriana
+- Argo
+- The Hunt for Red October
+- The Stepford Wives
+- Little Miss Sunshine
 
 ## Rewatched
 - Eternal Sunshine of the Spotless Mind
 - Primer
 - Mean Girls
+- Rang De Basanti
+- A Serious Man
+- In the Loop
+- Burn After Reading
