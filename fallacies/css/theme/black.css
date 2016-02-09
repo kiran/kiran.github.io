@@ -273,6 +273,11 @@ body {
 .reveal .controls .navigate-down.enabled:hover {
   border-top-color: #8dcffc; }
 
+p.watermark {
+  font-size: .6em;
+  color: #797676;
+}
+
 /*********************************************
  * PROGRESS BAR
  *********************************************/

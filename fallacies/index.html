@@ -41,47 +41,51 @@
 			<!-- Any section element inside of this container is displayed as a slide -->
 			<div class="slides">
 				<section>
-					<h2>Fallacies of Distributed Computing</h2>
-				</section>
-
-				<section>
 					<h2>The network is reliable</h2>
-					<img src="/fallacies/images/network.jpg" />
+					<img class="stretch" src="/fallacies/images/network.jpg" />
+					<p class="watermark">fallacies of distributed computing</p>
 				</section>
 
 				<section>
 					<h2>Latency is zero</h2>
-					<img src="/fallacies/images/latency.jpg" />
+					<img class='stretch' src="/fallacies/images/latency.jpg" />
+					<p class="watermark">fallacies of distributed computing</p>
 				</section>
 
 				<section>
 					<h2>Bandwidth is infinite</h2>
-					<img src="/fallacies/images/bandwidth.jpg" />
+					<img class='stretch' src="/fallacies/images/bandwidth.jpg" />
+					<p class="watermark">fallacies of distributed computing</p>
 				</section>
 
 				<section>
 					<h2>The network is secure</h2>
-					<img src="/fallacies/images/security.jpg" />
+					<img class='stretch' src="/fallacies/images/security.jpg" />
+					<p class="watermark">fallacies of distributed computing</p>
 				</section>
 
 				<section>
 					<h2>The topology does not change</h2>
-					<img src="/fallacies/images/topology.jpg" />
+					<img class='stretch' src="/fallacies/images/topology.jpg" />
+					<p class="watermark">fallacies of distributed computing</p>
 				</section>
 
 				<section>
 					<h2>There is one administrator</h2>
-					<img src="/fallacies/images/admin.jpg" />
+					<img class='stretch' src="/fallacies/images/admin.jpg" />
+					<p class="watermark">fallacies of distributed computing</p>
 				</section>
 
 				<section>
 					<h2>Transport cost is zero</h2>
-					<img src="/fallacies/images/transport-cost.jpg" />
+					<img class='stretch' src="/fallacies/images/transport-cost.jpg" />
+					<p class="watermark">fallacies of distributed computing</p>
 				</section>
 
 				<section>
 					<h2>The network is homogenous</h2>
-					<img src="/fallacies/images/homogenous.jpg" />
+					<img class='stretch' src="/fallacies/images/homogenous.jpg" />
+					<p class="watermark">fallacies of distributed computing</p>
 				</section>
 
 			</div>
@@ -103,6 +107,19 @@
 				autoSlide: 10000,
 
 				transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+				// The "normal" size of the presentation, aspect ratio will be preserved
+		    // when the presentation is scaled to fit different resolutions. Can be
+		    // specified using percentage units.
+		    width: 960,
+		    height: 700,
+
+		    // Factor of the display size that should remain empty around the content
+		    margin: 0.1,
+
+		    // Bounds for smallest/largest possible scale to apply to content
+		    minScale: 0.2,
+		    maxScale: 1.0
 			});
 
 		</script>
