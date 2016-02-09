@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width initial-scale=1">
+
+  <title>(redbook) What Goes Around Comes Around</title>
+  <meta name="description" content="This is part of a series of posts about papers from the latest Red Book (Readings in Database Systems). The post that follows is mostly an annotated (non-com...">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://www.kiranbot.com/what-goes-around-comes-around">
+  <link rel="alternate" type="application/atom+xml" title="Kiran Bhattaram" href="http://www.kiranbot.com/feed.xml" />
+  <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,italic' rel='stylesheet' type='text/css'>
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-67387019-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">Kiran Bhattaram</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+        <a class="page-link" href="/about">About</a>
+        <a class="page-link" href="/computers">Computers</a>
+        <a class="page-link" href="/papers">Paper Reports</a>
+        <a class="page-link" href="/sewing">Sewing</a>
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <div class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">(redbook) What Goes Around Comes Around</h1>
+    <p class="post-meta">Jan 2, 2016
+      <br>
+
+    [
+      <a href='/tags/papers'>papers</a>
+      ,
+    
+      <a href='/tags/databases'>databases</a>
+      ,
+    
+      <a href='/tags/redbook'>redbook</a>
+      
+    ]
+    </p>
+  </header>
+
+  <article class="post-content">
+    <p><em>This is part of a series of posts about papers from the latest Red Book (Readings in Database Systems). The post that follows is mostly an annotated (non-comprehensive) summary of the paper – what I found interesting, and want to discuss further.</em></p>
+
+<ul>
+  <li>Michael Stonebraker,  Joseph M. Hellerstein. <a href="https://mitpress.mit.edu/sites/default/files/titles/content/9780262693141_sch_0001.pdf">What Goes Around Comes Around</a>. (2005)</li>
+</ul>
+
+<h2 id="summary">summary</h2>
+
+<p>The first paper discussed is a summary of 35 years of database systems’ data models, grouped loosely into 9 eras. It’s fascinating as a historical record, written with a bunch of opinions and wry humor.</p>
+
+<p>The paper describes each data model era by modeling the same data – suppliers, parts, and the relationship between them (supplier, part, quantity available). The authors describe the historical context of that data model, and often select a representative implementation to discuss. Each section ends with a set of <a href="#footnotes">lessons learned</a> during that historical period.</p>
+
+<p>The eras discussed in the paper are:</p>
+
+<ol>
+  <li>Hierarchical (IMS)
+    <ul>
+      <li>represented data as a tree relationship, which is a fairly restrictive model.</li>
+    </ul>
+  </li>
+  <li>Network (CODASYL)
+    <ul>
+      <li>represented data as a network of interlined entities, which is more flexible than hierarchies, but way more complex.</li>
+    </ul>
+  </li>
+  <li>Relational
+    <ul>
+      <li>represented data as tables.</li>
+    </ul>
+  </li>
+  <li>Entity-Relationship
+    <ul>
+      <li>represented data as entities &amp; their relationships. Never took off as a database’s data model, but it really took off as a model people used to design their database schemas.</li>
+    </ul>
+  </li>
+  <li>Extended relational (R++)
+    <ul>
+      <li>relational databases + other small improvements (enum types, aggregation, etc.)</li>
+    </ul>
+  </li>
+  <li>Semantic
+    <ul>
+      <li>focused on classes &amp; inheritance, making it easier to map to OO languages. ~no adoption.</li>
+    </ul>
+  </li>
+  <li>Object-oriented
+    <ul>
+      <li>OODBs, which essentially provide persistent representations of programming language objects. Seemed awfully similar/subsumed by serialization formats?</li>
+    </ul>
+  </li>
+  <li>Object-relational (POSTGRES)
+    <ul>
+      <li>relational databases plus user-defined datatypes, user-defined functions, and user-defined access methods (custom indexing, etc.)</li>
+    </ul>
+  </li>
+  <li>Semi-structured
+    <ul>
+      <li>schema-last datasets, plus features from all previous eras.</li>
+    </ul>
+  </li>
+</ol>
+
+<p>The Red Book defines 3 other recent data models/trends:</p>
+
+<ol start="10">
+  <li>The rise of JSON as
+    <ul>
+      <li>(1) a general purpose hierarchical data format, à la IMS, (described as a "disaster in the making")</li>
+      <li>(2) as a representation of sparse data (c.f. JSON fields in Postgres/MySQL) (reasonable/effective)</li>
+      <li>(3) as a mechanism for "schema-on-read," which functions essentially as a projection operation. (~fine)</li>
+    </ul>
+  </li>
+  <li>Map-reduce
+    <ul>
+      <li>"not an architecture with any broad-scale applicability"</li>
+    </ul>
+  </li>
+  <li>HDFS clusters as "data lakes"</li>
+</ol>
+
+<p>The authors describe a few criteria by which they judge the technical merit of the models:</p>
+
+<ul>
+  <li>physical data independence</li>
+  <li>logical data independence</li>
+  <li>complexity of the implementation</li>
+  <li>flexibility of the model</li>
+  <li>commercial viability (performance, need for specialization, etc.)</li>
+</ul>
+
+<p>The concepts of physical and logical data independence are particularly important here, since those are the means by which improvements to the core database (physical) or application code (logical) are made. Physical data independence lets a database use different (or multiple!) storage engines. For example, MySQL lets you use InnoDB and MyISAM for different tables. I’ve heard people say that, similarly, MongoDB is starting to become slightly more legit now that it supports multiple storage engines.<sup id="fnref:nelhage"><a href="#fn:nelhage" class="footnote">1</a></sup></p>
+
+<p>The paper also discusses the history of the “Great Debate” between supporters relational databases and CODASYL/IMS. This is fascinating – both because we’re having the same arguments again in the 2010s, and because the argument falls into a shape familiar from other Great Debates (assembly/compilers, SOAP/JSON apis, dynamic/typed languages etc.) This probably happens every time a new abstraction barrier is crossed.</p>
+
+<h2 id="on-schemaless-databases">on schemaless databases</h2>
+
+<p>The schema-last section was especially interesting to read, after the recent surge in popularity of schemaless/flexible schema databases. Many of the points still hold, especially those about semantic hetergeneity.</p>
+
+<p>Semantic heterogeneity happens when a field on a bunch of records of the same type (an employee, for example) does not conform to a common representation (an employee’s address might be a string, foreign key, or (lat, long) tuples.) This field holds no inherent type, which leads to all sorts of hilarity. Most use cases of these databases still requires some sort of structured schema – they’ve just pulled most of the structure of that schema into application code, instead. The state of the database becomes a representation of all of the different states of the code that produced it, which requires the application code to be able to deal with this combinatorial complexity.</p>
+
+<blockquote>
+  <p>any schema-last application will have to confront semantic heterogeneity on a record-by-record basis, where it will be even more costly to solve.</p>
+</blockquote>
+
+<p>This tradeoff in flexibility often leads to increased logical data dependence and complexity down the line.</p>
+
+<p>The one case they present for schema-last applications is information retrieval on pure text. This seems like ElasticSearch’s use case – a loose(ish) schema that allows you to define searchable fields.</p>
+
+<h2 id="on-industry-adoption">on industry adoption</h2>
+
+<p>The paper’s story arc describes the combination of historical quirks that created the current relational DBMS environment, and its widespread industry adoption.</p>
+
+<p>Early relational database implementations were portable, which helped them win out the VAX market, as minicomputers rose in popularity. In contrast, the mainframe market was primarily dominated by IMS. Eventually, IBM chose to throw its weight behind DB/2 and SQL, effectively killing out IMS/CODASYL and alternative relational query languages like QUEL.</p>
+
+<blockquote>
+  <p>Technical debates are usually settled by the elephants of the marketplace, and often for reasons that have very little to do with technology.</p>
+</blockquote>
+
+<p>However, designing schemas for relational databases was still difficult. This led to the rise in popularity of the entity-relationship model (those familiar boxes and arrows and stars from UML), which enabled mere mortals to put together normalized schemas.</p>
+
+<p>Later, in the 1980s, vendors were singularly focused on transaction performance, which meant that features proposed to make relational databases easier to use fizzled out. No one was particularly interested in features that could effectively be boiled down to pure SQL, even if they significantly simplified the programming logic. User-defined data types and access methods weren’t added to relational databases until vanilla RDBMSs were useless for GIS, which eventually led to POSTGRES.</p>
+
+<blockquote>
+  <p>Unless there is a big performance or functionality advantage, new constructs will go nowhere.</p>
+</blockquote>
+
+<p>This echoes Bell Labs’ approach to innovation – significantly “better or cheaper or both”.</p>
+
+<h2 id="related-readings-where-to-go-from-here">Related readings (where to go from here)</h2>
+
+<ul>
+  <li>Readings in Database Systems, of course</li>
+  <li>The implementation of postgres</li>
+  <li>A critique of the SQL database language</li>
+</ul>
+
+<h2 id="footnotes">footnotes</h2>
+
+<p>Collected and summarized, the lessons are:</p>
+
+<ol>
+  <li>Physical and logical data independence are highly desirable.</li>
+  <li>Tree-structured data models are very restrictive.</li>
+  <li>It is challenging to provide sophisticated logical reorganizations of tree-structured data.</li>
+  <li>A record-at-a-time user interface forces the programmer to do manual query optimization, and this is often hard.</li>
+  <li>Networks are more flexible than hierarchies, but more complex.</li>
+  <li>Loading and recovering networks is more complex than hierarchies/independently decomposable data.</li>
+  <li>Set-at-a-time languages are good, regardless of the data model, since they offer much improved physical independence.
+    - might be worth combining this and the record-at-a-time point, and the query optimizer point later on into a paragraph.</li>
+  <li>Logical data independence is easier with a simple data model than a complex one.</li>
+  <li>Technical debates are usually settled by the elephants of the marketplace, and often for reasons that have very little to do with technology.</li>
+  <li>Query optimizers can beat all but the best record-at-atime DBMS application programmers.</li>
+  <li>Functional dependencies are too difficult for mere mortals to understand. (KISS)</li>
+  <li>Unless there is a big performance or functionality advantage, new constructs will go nowhere.</li>
+  <li>Packages will not sell to users unless they are in major pain.</li>
+  <li>Persistent languages will go nowhere without the support of the programming language community.</li>
+  <li>The object-relational model has 2 main advantages: putting code in the database (and thereby blurring the distinction between code and data), and user-defined access methods.
+    - this sounds v. similar to the repository pattern/storage-srv. Is this a common pattern? Is a repository just v. similar to the object-relational model?</li>
+  <li>Widespread adoption of new technology requires either standards and/or an elephant pushing hard.</li>
+  <li>Schema-last is probably a niche market.</li>
+  <li>XQuery is pretty much OR SQL with a different syntax.</li>
+  <li>XML will not solve the semantic heterogeneity either inside or outside the enterprise.</li>
+</ol>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:nelhage">
+      <p>nelhage’s <a href="https://blog.nelhage.com/2015/11/what-mongodb-got-right/">What MongoDB Got Right</a> is an interesting read. <a href="#fnref:nelhage" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+  </article>
+
+</div>
+<section class="comments">
+    <h2>Comments</h2>
+    <div id="disqus_thread" aria-live="polite">
+      <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+</section>
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'kiranbot';
+      
+      // var disqus_developer = 1;
+      var disqus_identifier = 'http://www.kiranbot.com/what-goes-around-comes-around';
+      var disqus_url = 'http://www.kiranbot.com/what-goes-around-comes-around';
+      var disqus_script = 'embed.js';
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/2.0.0/anchor.min.js"></script>
+<script type="text/javascript">
+anchors.options = {
+  placement: 'left'
+};
+anchors.add()
+</script>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Kiran Bhattaram</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col  footer-col-1">
+        <ul class="contact-list">
+          <li>Kiran Bhattaram</li>
+          <li><a href="mailto:"></a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col  footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/kiran">
+              <span class="icon  icon--github">
+                <svg viewBox="0 0 16 16">
+                  <path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/>
+                </svg>
+              </span>
+
+              <span class="username">kiran</span>
+            </a>
+          </li>
+          
+
+          
+          <li>
+            <a href="https://twitter.com/kiranb">
+              <span class="icon  icon--twitter">
+                <svg viewBox="0 0 16 16">
+                  <path fill="#828282" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809
+                  c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/>
+                </svg>
+              </span>
+
+              <span class="username">kiranb</span>
+            </a>
+          </li>
+          
+        </ul>
+      </div>
+
+      <div class="footer-col  footer-col-3">
+        <p class="text">An occasional blog about making things. Often programming and sewing.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

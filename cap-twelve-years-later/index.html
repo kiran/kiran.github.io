@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width initial-scale=1">
+
+  <title>(paper report) CAP Twelve Years Later</title>
+  <meta name="description" content="This is part of a series of posts I&#8217;m writing for my version of NaNoWriMo, where I summarize/review papers I&#8217;ve read recently. These aren&#8217;t...">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://www.kiranbot.com/cap-twelve-years-later">
+  <link rel="alternate" type="application/atom+xml" title="Kiran Bhattaram" href="http://www.kiranbot.com/feed.xml" />
+  <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,italic' rel='stylesheet' type='text/css'>
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-67387019-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">Kiran Bhattaram</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+        <a class="page-link" href="/about">About</a>
+        <a class="page-link" href="/computers">Computers</a>
+        <a class="page-link" href="/papers">Paper Reports</a>
+        <a class="page-link" href="/sewing">Sewing</a>
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <div class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">(paper report) CAP Twelve Years Later</h1>
+    <p class="post-meta">Nov 9, 2015
+      <br>
+
+    [
+      <a href='/tags/papers'>papers</a>
+      ,
+    
+      <a href='/tags/distributed-systems'>distributed-systems</a>
+      
+    ]
+    </p>
+  </header>
+
+  <article class="post-content">
+    <p><em>This is part of a series of posts I’m writing for my version of NaNoWriMo, where I summarize/review papers I’ve read recently. These aren’t quite papers – they’re publications in a magazine.</em></p>
+
+<ul>
+  <li>Eric Brewer. <a href="http://www.infoq.com/articles/cap-twelve-years-later-how-the-rules-have-changed">CAP Twelve Years Later: How the “Rules” Have Changed</a>. (IEEE, 2012)</li>
+</ul>
+
+<p>This is an article from Computer magazine that expands on some misconceptions about the CAP theorem. It mostly focuses on plans for operation during a partition, and recovery afterward.</p>
+
+<h3 id="a-note-on-oversimplification">(A note on oversimplification)</h3>
+
+<blockquote>
+  <p>The “2 of 3” formulation was always misleading, because it tended to oversimplify the tensions among properties.</p>
+</blockquote>
+
+<p>Talking about consistency, availability, and partition tolerance requires more nuance. CAP prohibits only a small part of the design space – it’s lazy to completely give up on C, or A, or P because the perfect combination of all three is impossible.</p>
+
+<p>Also, the C and A tradeoff isn’t a single choice for a system. Large are, in turn, composed of many subsystems that might be making different CAP choices. The choice can even change depending on the operation being performed, or the data being accessed.</p>
+
+<blockquote>
+  <p>All three properties are more continuous than binary. The modern CAP goal should be to maximize combinations of consistency and availability that make sense for the specific application. Such an approach incorporates plans for operation during a partition and for recovery afterward.</p>
+</blockquote>
+
+<p>Also, many systems are beginning to offer a disconnected mode of operation.</p>
+
+<blockquote>
+  <p>During a partition, allowing one side to update state will cause the nodes to become inconsistent, therefore forfeiting C. Likewise, if the choice is to preserve consistency, one side of the partition should act as if it is unavailable, thus forfeiting P. Only when nodes communicate is it possible to preserve both consistency and availability.</p>
+</blockquote>
+
+<blockquote>
+  <p>If users cannot reach the service at all, there is no choice between C and A.</p>
+</blockquote>
+
+<h2 id="on-partition-resilience">On partition resilience</h2>
+
+<blockquote>
+  <p>Such an approach incorporates plans for operation during a partition and for recovery afterward.</p>
+</blockquote>
+
+<p>A strategy that is partition-resilient:</p>
+
+<ol>
+  <li>detects the start of a partition,</li>
+  <li>enters an explicit partition mode that may limit some operations, and</li>
+  <li>initiates a recovery process to restore consistency and compensate for mistakes made during a partition.</li>
+</ol>
+
+<h3 id="detecting-partitions">1. Detecting partitions</h3>
+
+<blockquote>
+  <p>A partition is a time bound on communication.</p>
+</blockquote>
+
+<p>The partition decision happens in response to an operation timing out. The system can either:</p>
+
+<ol>
+  <li>cancel the operation and thus decrease availability, or</li>
+  <li>proceed with the operation and thus risk inconsistency.
+    <ul>
+      <li>retrying communication indefinitely (via paxos or 2PC) in the face of a partition is in essence choosing C over A</li>
+    </ul>
+  </li>
+</ol>
+
+<p>This has some interesting implications for partitions:</p>
+
+<blockquote>
+  <p>This means that there is no global view of a partition – some nodes might detect a partition, and some might not.</p>
+</blockquote>
+
+<p>Partitions can also be one-way – node A might be timing out when connecting to node B, but node B can see node A without issues.</p>
+
+<p>Because partitions are tied to latency, system designers can tweak the system’s sensitivity to partitions.</p>
+
+<blockquote>
+  <p>Designers can set time bounds intentionally according to target response times: systems with tighter bounds will likely enter partition mode more often and at times when the network is merely slow and not actually partitioned.</p>
+</blockquote>
+
+<h3 id="partition-mode">2. Partition mode</h3>
+
+<p>The set of operations that are restricted during a partition depends on the invariants the system must maintain. Ideally, you want to restrict any operations that might violate the invariant, such as externalized events (talking to banking systems, sending emails, etc.)</p>
+
+<p>Methods for dealing with this:</p>
+
+<ul>
+  <li>use <a href="https://en.wikipedia.org/wiki/Version_vector">version vectors</a> to track atomic operations.
+    <ul>
+      <li>When the partition heals, you can reorder the vectors to attempt to emulate causal consistency.</li>
+    </ul>
+  </li>
+  <li>to deal with externalized events, build a write-ahead log in partition mode, and replay these events when the system comes back up.
+    <ul>
+      <li>For example: instead of reaching out to credit card networks during a partition, the system records the intent and execute it after the recovery.</li>
+    </ul>
+  </li>
+</ul>
+
+<p>This presents a user-interface challenge: “[communicating] that tasks are in progress, but not complete.” Some systems present different UI views in disconnected operation, like Google Docs or Bayou.</p>
+
+<h3 id="partition-recovery">3. Partition recovery</h3>
+
+<p>When the partition heals, the system has (hopefully) kept a careful log of operations that happened during the partition. With this history, the system can reconcile its state and make compensations for any inconsistencies/mistakes made during partition mode.</p>
+
+<p>The method used to merge the inconsistent narratives varies by use case. Some systems require explicit manual intervention (git, wiki systems) to resolve conflicts. Some systems always choose to keep additions, some do last-writer wins, and still others constrain operations during offline mode.</p>
+
+<p>CRDTs (commutative repicated data types) are really powerful tools for state convergence after a partition.</p>
+
+<p>That said, CRDTs are only useful for locally-verifiable invariants – you can’t use them to handle externalized calls. Methods for handling externalized mistakes made during a partition depend on the application.</p>
+
+<p>As an example, Brewer brings up bank operations during a partition. Because of communication delays, the banking system defines the amount of risk it’s willing to tolerate, and then relies on auditing and compensation (overdraft fees) to make up the difference.</p>
+
+<h4 id="a-note-on-eventual-consistency">(a note on eventual consistency)</h4>
+
+<p>Reconciling divergent state is important not just for healing partitions, but also for latency improvements in the general case. Brewer brings up some examples of consistency models optimized for performance:</p>
+
+<ul>
+  <li>Yahoo’s PNUTS:
+    <ul>
+      <li>the local data copy is the source of truth, since single user data is naturally partitioned according to the user’s location.</li>
+    </ul>
+  </li>
+  <li>Facebook’s’ odd RYW scheme
+    <ul>
+      <li>the master copy is always in one location, so a remote user reads from the closer (potentially stale) copy. When the user issues a write, the update goes to the master copy, and so do all reads for the next 20s, which is much larger than the replication delay.</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="similar-papers-where-to-go-from-here">Similar Papers (where to go from here)</h2>
+
+<ul>
+  <li><a href="https://www.cs.berkeley.edu/~brewer/cs262b-2004/PODC-keynote.pdf">Towards Robust Distributed Systems</a>. Eric Brewer.
+    <ul>
+      <li>A fairly broad summary of the CAP theorem, harvest/yield, the DQ principle, and how those might apply to system design.</li>
+    </ul>
+  </li>
+  <li><a href="http://codahale.com/you-cant-sacrifice-partition-tolerance/">You Can’t Sacrifice Partition Tolerance</a>. Coda Hale.
+    <ul>
+      <li>mostly what it says on the tin. Plus thoughts about evaluating systems by their CAP properties.</li>
+    </ul>
+  </li>
+  <li><a href="http://zoo.cs.yale.edu/classes/cs422/2013/bib/terry95managing.pdf">Managing Update Conflicts in Bayou</a>.
+    <ul>
+      <li>A very early example of optimistically handling concurrent updates. The paper describes a hypothetical calendar app with an offline mode, and methods for reconciling state after reconnecting to the internet.</li>
+    </ul>
+  </li>
+  <li><a href="http://hal.upmc.fr/file/index/docid/555588/filename/techreport.pdf">A comprehensive study of
+Convergent and Commutative Replicated Data Types</a>.
+    <ul>
+      <li>This is a fairly long (50 pages!), and fairly formal paper that introduces the idea of convergent data types. For a shorter/lighter version, <a href="https://vimeo.com/43903960">this video</a> by Sean Cribbs is a good introduction.</li>
+    </ul>
+  </li>
+</ul>
+
+
+  </article>
+
+</div>
+<section class="comments">
+    <h2>Comments</h2>
+    <div id="disqus_thread" aria-live="polite">
+      <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+</section>
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'kiranbot';
+      
+      // var disqus_developer = 1;
+      var disqus_identifier = 'http://www.kiranbot.com/cap-twelve-years-later';
+      var disqus_url = 'http://www.kiranbot.com/cap-twelve-years-later';
+      var disqus_script = 'embed.js';
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/2.0.0/anchor.min.js"></script>
+<script type="text/javascript">
+anchors.options = {
+  placement: 'left'
+};
+anchors.add()
+</script>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Kiran Bhattaram</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col  footer-col-1">
+        <ul class="contact-list">
+          <li>Kiran Bhattaram</li>
+          <li><a href="mailto:"></a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col  footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/kiran">
+              <span class="icon  icon--github">
+                <svg viewBox="0 0 16 16">
+                  <path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/>
+                </svg>
+              </span>
+
+              <span class="username">kiran</span>
+            </a>
+          </li>
+          
+
+          
+          <li>
+            <a href="https://twitter.com/kiranb">
+              <span class="icon  icon--twitter">
+                <svg viewBox="0 0 16 16">
+                  <path fill="#828282" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809
+                  c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/>
+                </svg>
+              </span>
+
+              <span class="username">kiranb</span>
+            </a>
+          </li>
+          
+        </ul>
+      </div>
+
+      <div class="footer-col  footer-col-3">
+        <p class="text">An occasional blog about making things. Often programming and sewing.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

@@ -1,0 +1,1231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Kiran Bhattaram</title>
+    <description>An occasional blog about making things. Often programming and sewing.</description>
+    <link>http://www.kiranbot.com/</link>
+    <atom:link href="http://www.kiranbot.com/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Tue, 09 Feb 2016 14:10:53 -0800</pubDate>
+    <lastBuildDate>Tue, 09 Feb 2016 14:10:53 -0800</lastBuildDate>
+    <generator>Jekyll v2.5.3</generator>
+    
+      <item>
+        <title>(redbook) What Goes Around Comes Around</title>
+        <description>&lt;p&gt;&lt;em&gt;This is part of a series of posts about papers from the latest Red Book (Readings in Database Systems). The post that follows is mostly an annotated (non-comprehensive) summary of the paper – what I found interesting, and want to discuss further.&lt;/em&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Michael Stonebraker,  Joseph M. Hellerstein. &lt;a href=&quot;https://mitpress.mit.edu/sites/default/files/titles/content/9780262693141_sch_0001.pdf&quot;&gt;What Goes Around Comes Around&lt;/a&gt;. (2005)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;summary&quot;&gt;summary&lt;/h2&gt;
+
+&lt;p&gt;The first paper discussed is a summary of 35 years of database systems’ data models, grouped loosely into 9 eras. It’s fascinating as a historical record, written with a bunch of opinions and wry humor.&lt;/p&gt;
+
+&lt;p&gt;The paper describes each data model era by modeling the same data – suppliers, parts, and the relationship between them (supplier, part, quantity available). The authors describe the historical context of that data model, and often select a representative implementation to discuss. Each section ends with a set of &lt;a href=&quot;#footnotes&quot;&gt;lessons learned&lt;/a&gt; during that historical period.&lt;/p&gt;
+
+&lt;p&gt;The eras discussed in the paper are:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Hierarchical (IMS)
+    &lt;ul&gt;
+      &lt;li&gt;represented data as a tree relationship, which is a fairly restrictive model.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Network (CODASYL)
+    &lt;ul&gt;
+      &lt;li&gt;represented data as a network of interlined entities, which is more flexible than hierarchies, but way more complex.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Relational
+    &lt;ul&gt;
+      &lt;li&gt;represented data as tables.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Entity-Relationship
+    &lt;ul&gt;
+      &lt;li&gt;represented data as entities &amp;amp; their relationships. Never took off as a database’s data model, but it really took off as a model people used to design their database schemas.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Extended relational (R++)
+    &lt;ul&gt;
+      &lt;li&gt;relational databases + other small improvements (enum types, aggregation, etc.)&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Semantic
+    &lt;ul&gt;
+      &lt;li&gt;focused on classes &amp;amp; inheritance, making it easier to map to OO languages. ~no adoption.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Object-oriented
+    &lt;ul&gt;
+      &lt;li&gt;OODBs, which essentially provide persistent representations of programming language objects. Seemed awfully similar/subsumed by serialization formats?&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Object-relational (POSTGRES)
+    &lt;ul&gt;
+      &lt;li&gt;relational databases plus user-defined datatypes, user-defined functions, and user-defined access methods (custom indexing, etc.)&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Semi-structured
+    &lt;ul&gt;
+      &lt;li&gt;schema-last datasets, plus features from all previous eras.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;The Red Book defines 3 other recent data models/trends:&lt;/p&gt;
+
+&lt;ol start=&quot;10&quot;&gt;
+  &lt;li&gt;The rise of JSON as
+    &lt;ul&gt;
+      &lt;li&gt;(1) a general purpose hierarchical data format, à la IMS, (described as a &quot;disaster in the making&quot;)&lt;/li&gt;
+      &lt;li&gt;(2) as a representation of sparse data (c.f. JSON fields in Postgres/MySQL) (reasonable/effective)&lt;/li&gt;
+      &lt;li&gt;(3) as a mechanism for &quot;schema-on-read,&quot; which functions essentially as a projection operation. (~fine)&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Map-reduce
+    &lt;ul&gt;
+      &lt;li&gt;&quot;not an architecture with any broad-scale applicability&quot;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;HDFS clusters as &quot;data lakes&quot;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;The authors describe a few criteria by which they judge the technical merit of the models:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;physical data independence&lt;/li&gt;
+  &lt;li&gt;logical data independence&lt;/li&gt;
+  &lt;li&gt;complexity of the implementation&lt;/li&gt;
+  &lt;li&gt;flexibility of the model&lt;/li&gt;
+  &lt;li&gt;commercial viability (performance, need for specialization, etc.)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The concepts of physical and logical data independence are particularly important here, since those are the means by which improvements to the core database (physical) or application code (logical) are made. Physical data independence lets a database use different (or multiple!) storage engines. For example, MySQL lets you use InnoDB and MyISAM for different tables. I’ve heard people say that, similarly, MongoDB is starting to become slightly more legit now that it supports multiple storage engines.&lt;sup id=&quot;fnref:nelhage&quot;&gt;&lt;a href=&quot;#fn:nelhage&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+
+&lt;p&gt;The paper also discusses the history of the “Great Debate” between supporters relational databases and CODASYL/IMS. This is fascinating – both because we’re having the same arguments again in the 2010s, and because the argument falls into a shape familiar from other Great Debates (assembly/compilers, SOAP/JSON apis, dynamic/typed languages etc.) This probably happens every time a new abstraction barrier is crossed.&lt;/p&gt;
+
+&lt;h2 id=&quot;on-schemaless-databases&quot;&gt;on schemaless databases&lt;/h2&gt;
+
+&lt;p&gt;The schema-last section was especially interesting to read, after the recent surge in popularity of schemaless/flexible schema databases. Many of the points still hold, especially those about semantic hetergeneity.&lt;/p&gt;
+
+&lt;p&gt;Semantic heterogeneity happens when a field on a bunch of records of the same type (an employee, for example) does not conform to a common representation (an employee’s address might be a string, foreign key, or (lat, long) tuples.) This field holds no inherent type, which leads to all sorts of hilarity. Most use cases of these databases still requires some sort of structured schema – they’ve just pulled most of the structure of that schema into application code, instead. The state of the database becomes a representation of all of the different states of the code that produced it, which requires the application code to be able to deal with this combinatorial complexity.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;any schema-last application will have to confront semantic heterogeneity on a record-by-record basis, where it will be even more costly to solve.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;This tradeoff in flexibility often leads to increased logical data dependence and complexity down the line.&lt;/p&gt;
+
+&lt;p&gt;The one case they present for schema-last applications is information retrieval on pure text. This seems like ElasticSearch’s use case – a loose(ish) schema that allows you to define searchable fields.&lt;/p&gt;
+
+&lt;h2 id=&quot;on-industry-adoption&quot;&gt;on industry adoption&lt;/h2&gt;
+
+&lt;p&gt;The paper’s story arc describes the combination of historical quirks that created the current relational DBMS environment, and its widespread industry adoption.&lt;/p&gt;
+
+&lt;p&gt;Early relational database implementations were portable, which helped them win out the VAX market, as minicomputers rose in popularity. In contrast, the mainframe market was primarily dominated by IMS. Eventually, IBM chose to throw its weight behind DB/2 and SQL, effectively killing out IMS/CODASYL and alternative relational query languages like QUEL.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Technical debates are usually settled by the elephants of the marketplace, and often for reasons that have very little to do with technology.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;However, designing schemas for relational databases was still difficult. This led to the rise in popularity of the entity-relationship model (those familiar boxes and arrows and stars from UML), which enabled mere mortals to put together normalized schemas.&lt;/p&gt;
+
+&lt;p&gt;Later, in the 1980s, vendors were singularly focused on transaction performance, which meant that features proposed to make relational databases easier to use fizzled out. No one was particularly interested in features that could effectively be boiled down to pure SQL, even if they significantly simplified the programming logic. User-defined data types and access methods weren’t added to relational databases until vanilla RDBMSs were useless for GIS, which eventually led to POSTGRES.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Unless there is a big performance or functionality advantage, new constructs will go nowhere.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;This echoes Bell Labs’ approach to innovation – significantly “better or cheaper or both”.&lt;/p&gt;
+
+&lt;h2 id=&quot;related-readings-where-to-go-from-here&quot;&gt;Related readings (where to go from here)&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Readings in Database Systems, of course&lt;/li&gt;
+  &lt;li&gt;The implementation of postgres&lt;/li&gt;
+  &lt;li&gt;A critique of the SQL database language&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;footnotes&quot;&gt;footnotes&lt;/h2&gt;
+
+&lt;p&gt;Collected and summarized, the lessons are:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Physical and logical data independence are highly desirable.&lt;/li&gt;
+  &lt;li&gt;Tree-structured data models are very restrictive.&lt;/li&gt;
+  &lt;li&gt;It is challenging to provide sophisticated logical reorganizations of tree-structured data.&lt;/li&gt;
+  &lt;li&gt;A record-at-a-time user interface forces the programmer to do manual query optimization, and this is often hard.&lt;/li&gt;
+  &lt;li&gt;Networks are more flexible than hierarchies, but more complex.&lt;/li&gt;
+  &lt;li&gt;Loading and recovering networks is more complex than hierarchies/independently decomposable data.&lt;/li&gt;
+  &lt;li&gt;Set-at-a-time languages are good, regardless of the data model, since they offer much improved physical independence.
+    - might be worth combining this and the record-at-a-time point, and the query optimizer point later on into a paragraph.&lt;/li&gt;
+  &lt;li&gt;Logical data independence is easier with a simple data model than a complex one.&lt;/li&gt;
+  &lt;li&gt;Technical debates are usually settled by the elephants of the marketplace, and often for reasons that have very little to do with technology.&lt;/li&gt;
+  &lt;li&gt;Query optimizers can beat all but the best record-at-atime DBMS application programmers.&lt;/li&gt;
+  &lt;li&gt;Functional dependencies are too difficult for mere mortals to understand. (KISS)&lt;/li&gt;
+  &lt;li&gt;Unless there is a big performance or functionality advantage, new constructs will go nowhere.&lt;/li&gt;
+  &lt;li&gt;Packages will not sell to users unless they are in major pain.&lt;/li&gt;
+  &lt;li&gt;Persistent languages will go nowhere without the support of the programming language community.&lt;/li&gt;
+  &lt;li&gt;The object-relational model has 2 main advantages: putting code in the database (and thereby blurring the distinction between code and data), and user-defined access methods.
+    - this sounds v. similar to the repository pattern/storage-srv. Is this a common pattern? Is a repository just v. similar to the object-relational model?&lt;/li&gt;
+  &lt;li&gt;Widespread adoption of new technology requires either standards and/or an elephant pushing hard.&lt;/li&gt;
+  &lt;li&gt;Schema-last is probably a niche market.&lt;/li&gt;
+  &lt;li&gt;XQuery is pretty much OR SQL with a different syntax.&lt;/li&gt;
+  &lt;li&gt;XML will not solve the semantic heterogeneity either inside or outside the enterprise.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;div class=&quot;footnotes&quot;&gt;
+  &lt;ol&gt;
+    &lt;li id=&quot;fn:nelhage&quot;&gt;
+      &lt;p&gt;nelhage’s &lt;a href=&quot;https://blog.nelhage.com/2015/11/what-mongodb-got-right/&quot;&gt;What MongoDB Got Right&lt;/a&gt; is an interesting read. &lt;a href=&quot;#fnref:nelhage&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/div&gt;
+</description>
+        <pubDate>Sat, 02 Jan 2016 00:00:00 -0800</pubDate>
+        <link>http://www.kiranbot.com/what-goes-around-comes-around</link>
+        <guid isPermaLink="true">http://www.kiranbot.com/what-goes-around-comes-around</guid>
+        
+        <category>papers</category>
+        
+        <category>databases</category>
+        
+        <category>redbook</category>
+        
+        
+        <category>computers</category>
+        
+      </item>
+    
+      <item>
+        <title>2015 Reading Log</title>
+        <description>&lt;p&gt;I started listening to audiobooks this year, which meant that I could read in the most uncomfortable situations! Walking around the city! Commuting on the BART! Going on a run! I’ve also been sewing a lot this year, and came home almost every night to sew and read with a giant mug of tea. While I didn’t read significantly more books this year than last (33 v. 27), the length of the books I read increased, and I started reading more nonfiction.&lt;/p&gt;
+
+&lt;p&gt;I also read a ton of space operas this year. :D&lt;/p&gt;
+
+&lt;p&gt;For a prettier view, Goodreads has a great &lt;a href=&quot;https://www.goodreads.com/user/year_in_books/2015/&quot;&gt;year in review&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;favorites-in-approximate-order&quot;&gt;Favorites (in approximate order)&lt;/h2&gt;
+&lt;ol&gt;
+  &lt;li&gt;✨&lt;span class=&quot;loved&quot;&gt;&lt;strong&gt;Emperor of All Maladies&lt;/strong&gt;&lt;/span&gt;✨, &lt;em&gt;Siddhartha Mukherjee&lt;/em&gt;
+    &lt;ul&gt;
+      &lt;li&gt;A very well-written book that explains the intricate mechanics of cancer in a really approachable way. I can’t recommend this enough.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;✨&lt;span class=&quot;loved&quot;&gt;Sisters of the Revolution&lt;/span&gt;✨&lt;/strong&gt;
+    &lt;ul&gt;
+      &lt;li&gt;An anthology of feminist science fiction. It was disturbing and heart-warming and provocative in all the right ways. This was way too intense to read continuously.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;✨&lt;span class=&quot;loved&quot;&gt;&lt;strong&gt;The Dispossessed&lt;/strong&gt;&lt;/span&gt;✨, &lt;em&gt;Ursula Le Guin&lt;/em&gt;
+    &lt;ul&gt;
+      &lt;li&gt;I loved this book. It’s currently my go-to explanation for why I love science fiction – it enables you to set up a universe where you can explore fun concepts for the length of the novel. Working at a mostly structureless startup transitioning to a proper organization, the pitfalls of structurelessness are eerily familiar.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;✨&lt;span class=&quot;loved&quot;&gt;&lt;strong&gt;The Death and Life of Great American Cities&lt;/strong&gt;&lt;/span&gt;✨, &lt;em&gt;Jane Jacobs&lt;/em&gt;
+    &lt;ul&gt;
+      &lt;li&gt;So delightful! This resonates really well, and many of Jacobs’ complaints still hold true. She rails against large “superblocks” and praises mixed-use neighborhoods.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;✨&lt;span class=&quot;loved&quot;&gt;&lt;strong&gt;Embassytown&lt;/strong&gt;&lt;/span&gt;✨, &lt;em&gt;China Miéville&lt;/em&gt;
+    &lt;ul&gt;
+      &lt;li&gt;Like most of China Miéville’s books, the ideas he explores stick with me for a very long time. Unlike most of China Miéville’s books, I really enjoyed the characters and the plot in this book. Where &lt;em&gt;City and the City&lt;/em&gt; is a good metaphor for the world we live in, &lt;em&gt;Embassytown&lt;/em&gt; is a good metaphor for languages. This is kind of the “Darmok &amp;amp; Jalad” idea, but at novel-lengths.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;✨&lt;span class=&quot;loved&quot;&gt;&lt;strong&gt;House of Suns&lt;/strong&gt;&lt;/span&gt;✨, &lt;em&gt;Alastair Reynolds&lt;/em&gt;
+    &lt;ul&gt;
+      &lt;li&gt;This was a fantastic space opera, with really fun characters and a great world! The basic conceit is a deep-space chase scene that takes place over millenia, by a society of clones enmeshed in a conspiracy involving conscious robots. FUN.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;And everything else! These were really good, too.&lt;/p&gt;
+
+&lt;h2 id=&quot;winter-2015&quot;&gt;Winter 2015&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;The City and The City&lt;/strong&gt;, &lt;em&gt;China Miéville&lt;/em&gt;
+    &lt;ul&gt;
+      &lt;li&gt;I wasn’t really sold on it while I was reading it, but the world has really stuck with me since. It’s a great metaphor to use when describing split worlds. This hits my biggest pet peeve with detective stories, though – I hate that I didn’t understand the mechanics of the world enough to follow along with the mystery; my favorite parts of mysteries are picking up on the clues and solving the problems alongside the main character.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Season of the Witch&lt;/strong&gt;, &lt;em&gt;David Talbot&lt;/em&gt;
+    &lt;ul&gt;
+      &lt;li&gt;Breathless prose, but amazing stories. Don’t read it for the writing. There are some less-than-tasteful chapter titles, but this is a really great history of San Francisco, and all of the tumult it’s seen – the Summer of Love, the Zebra Killings, Harvey Milk, the Grateful Dead, Jefferson Airplane, Patty Hearst, the People’s Temple, and more.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Hild&lt;/strong&gt;, &lt;em&gt;Nicola Griffith&lt;/em&gt;
+    &lt;ul&gt;
+      &lt;li&gt;This is a novel set in fifth century England, where all the main characters are women with agency. They control much of the politics, all of the economy, and (mostly) their own lives. I want to use this book as a counterpoint whenever someone waves away lazy depictions of women in fantasy/medieval stories by explaining that “oh, women just didn’t have much of a role back then.”
+I’m so glad I bought the audiobook for this. This is near incomprehensible as a written novel, because the prose feels like it’s more meant to be listened to than read.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;spring-2015&quot;&gt;Spring 2015&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Three Body Problem&lt;/strong&gt;, Cixin Liu
+    &lt;ul&gt;
+      &lt;li&gt;I enjoyed this book a lot – the premise is great. This has 3 distinct tones – starts as psychological horror, transitions to hard science fiction, and ends a little action thriller. The nihilism was a really interesting touch, and got me into a lot of discussions with Harold. If you do read this, take care to not read synopses/blurbs for the book!&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Quantum Thief&lt;/strong&gt;, &lt;em&gt;Hannu Rajaniemi&lt;/em&gt;
+    &lt;ul&gt;
+      &lt;li&gt;Interesting read. Couldn’t get a hang of what tone this was trying to set. This is also super packed with cyberbabble, which doesn’t usually bother me, but was a little dense here. That said, the world was great – there’s a spinoff on the “brain in the cloud” trope, a society that has access control lists for your life, and time as a literal currency. A little Miéville.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;summer-2015&quot;&gt;Summer 2015&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Golem and the Jinni&lt;/strong&gt;, &lt;em&gt;Helene Wecker&lt;/em&gt;
+    &lt;ul&gt;
+      &lt;li&gt;Really lovely. I know the book’s flawed in a number of ways, but I still really enjoyed reading it.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Player of Games&lt;/strong&gt;, &lt;em&gt;Iain Banks&lt;/em&gt;
+    &lt;ul&gt;
+      &lt;li&gt;Kind of trite. A dude is good at games! There’s a society based on a giant game! The games are a metaphor! I see why people love this, but it’s a fairly weak Culture novel, though a good intro to the universe.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Use of Weapons&lt;/strong&gt;, &lt;em&gt;Iain Banks&lt;/em&gt;
+    &lt;ul&gt;
+      &lt;li&gt;I liked this a lot better than &lt;em&gt;Player of Games&lt;/em&gt; – the ethics are a bit more grey. The characters are interesting and multidimensional, and Skaffen-Amtiskaw is a fantastic drone. The middle dragged a bit, but the ending is pretty masterful.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;2001: A Space Odyssey&lt;/strong&gt;, &lt;em&gt;Arthur C. Clarke&lt;/em&gt;
+    &lt;ul&gt;
+      &lt;li&gt;A classic. Goes into more detail than the movie does – they were written at the same time, with the book as the more fleshed-out story, and the movie with more fleshed-out visuals.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;The Speed of Dark&lt;/strong&gt;, &lt;em&gt;Elizabeth Moon&lt;/em&gt;
+    &lt;ul&gt;
+      &lt;li&gt;POV of an autistic character. It’s told with a lot of compassion, but the characters are kind of cartoonish.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Six Months, Three Days&lt;/strong&gt;, &lt;em&gt;Charlie Jane Anders&lt;/em&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Pragmatic Programmer&lt;/strong&gt;, &lt;em&gt;Andrew Hunt, David Thomas&lt;/em&gt;
+    &lt;ul&gt;
+      &lt;li&gt;A decent overview of a bunch of best practices. For example – Don’t keep separate copies of config/data, automate as much as possible, build out the simplest end-to-end implementation of a system asap.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Chaos: Making a New Science&lt;/strong&gt;, &lt;em&gt;James Gleick&lt;/em&gt;
+    &lt;ul&gt;
+      &lt;li&gt;Fun popular science, but doesn’t get much deeper, either as a biography or as a study of the science.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;The Man Who Mistook His Wife for a Hat&lt;/strong&gt;, &lt;em&gt;Oliver Sacks&lt;/em&gt;
+    &lt;ul&gt;
+      &lt;li&gt;A set of existential horror stories, if you read them that way. Even scarier for being true!&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Nimona&lt;/strong&gt;, &lt;em&gt;Noelle Stevenson&lt;/em&gt;
+    &lt;ul&gt;
+      &lt;li&gt;An adorable comic about an irreverent, shapeshifting little girl. The graphics are gorgeous, and the characters lovable. I read this webcomic religiously in high school, and I’m glad to have the hardcover now. :)&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;The Little Schemer&lt;/strong&gt;
+    &lt;ul&gt;
+      &lt;li&gt;A delightful introduction to Scheme/Lisp, focusing on recursion. Written in a question/response style.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;fallwinter-2015&quot;&gt;Fall/Winter 2015&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Dark Forest&lt;/strong&gt;, &lt;em&gt;Cixin Liu&lt;/em&gt;
+    &lt;ul&gt;
+      &lt;li&gt;I have such a love/hate relationship with this book. The premise is great – if you had 4 centuries to prepare for an alien invasion, but the aliens have magically stopped the progress of basic science, what would you do? The characters are awful, though, and the women are almost entirely infuriating, childish caricatures, and the protagonist wandered in from a Murakami novel. The ideas, though!&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Ancillary Mercy&lt;/strong&gt;, &lt;em&gt;Ann Leckie&lt;/em&gt;
+    &lt;ul&gt;
+      &lt;li&gt;The return of my favorite agender spaceship! And the last in the series. Premise: what if your emperor’s consciousness were a distributed system, and a partition happened? 🍵🐓🐟🎶🚀&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Goblin Emperor&lt;/strong&gt;, &lt;em&gt;Katherine Addison&lt;/em&gt;
+    &lt;ul&gt;
+      &lt;li&gt;A great character study, where the protagonist is kind and compassionate, and things work out for him! That said, everything working out was a little too pat – it fell into the “if I’m a great guy, things will be just fine!” There wasn’t a unifying story to root for, which made the book a little unsatisfying.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Mr. Penumbra’s 24-Hour Bookstore&lt;/strong&gt;, &lt;em&gt;Robin Sloan&lt;/em&gt;
+    &lt;ul&gt;
+      &lt;li&gt;Adorable, but super cringey. Unabashedly enthusiastic.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Station Eleven&lt;/strong&gt;, &lt;em&gt;Emily St. John Mandel&lt;/em&gt;
+    &lt;ul&gt;
+      &lt;li&gt;Moody and atmospheric, but it drags a little, and ends a little abruptly. Not sure what I think of it.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Shards of Honour&lt;/strong&gt;, &lt;em&gt;Lois McMaster Bujold&lt;/em&gt;
+    &lt;ul&gt;
+      &lt;li&gt;a measured space opera romance. Cheesy, but comforting. I hear this is the weakest in the series; if so, I’m very excited to read the rest.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Rainbows End&lt;/strong&gt;, &lt;em&gt;Vernor Vinge&lt;/em&gt;
+    &lt;ul&gt;
+      &lt;li&gt;Fairly disappointing. It has promise, but doesn’t really go anywhere with it. Doesn’t help that none of the characters are particularly likeable.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Leviathan Wakes&lt;/strong&gt;, &lt;em&gt;James S.A. Corey&lt;/em&gt;
+    &lt;ul&gt;
+      &lt;li&gt;Characterization is kind of flat, but the story and world make up for that. The pace really kicks off about halfway through, and it’s a really fun read.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Thu, 17 Dec 2015 00:00:00 -0800</pubDate>
+        <link>http://www.kiranbot.com/2015-reading-log</link>
+        <guid isPermaLink="true">http://www.kiranbot.com/2015-reading-log</guid>
+        
+        <category>media</category>
+        
+        <category>books</category>
+        
+        
+        <category>reading</category>
+        
+      </item>
+    
+      <item>
+        <title>(paper report) Lessons from giant-scale services</title>
+        <description>&lt;p&gt;&lt;em&gt;This is part of a series of posts I’m writing for my version of NaNoWriMo, where I summarize/review papers I’ve read recently.&lt;/em&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Eric Brewer. &lt;a href=&quot;http://www.cs.berkeley.edu/~brewer/Giant.pdf&quot;&gt;Lessons from Giant-Scale Services&lt;/a&gt;. (IEEE Computer, 2001)
+    &lt;ul&gt;
+      &lt;li&gt;tl;dr: data per query is inversely proportional to queries per second at the limits of scale. Use this to inform your capacity planning and load-shedding plans.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;This is a paper from Eric Brewer (of the CAP theorem) summarizing his experiences working with large systems. Though the paper is from 2001, the basic tradeoffs of the systems he describes have not really changed since.&lt;/p&gt;
+
+&lt;p&gt;The most interesting insight of this paper is the DQ principle, which is related to the principles discussed in the &lt;a href=&quot;/harvest-yield&quot;&gt;harvest/yield&lt;/a&gt; paper:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;(data per query) x (queries per second) → constant.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;This paper is kind of a grab-bag of ideas, but I think the key insight is using the DQ principle to evaluate graceful degradation strategies.&lt;/p&gt;
+
+&lt;h2 id=&quot;measuring-availability-harvestyield&quot;&gt;Measuring availability (harvest/yield)&lt;/h2&gt;
+
+&lt;p&gt;Uptime, or the amount of time a site handles traffic, is the traditional metric of availability.&lt;/p&gt;
+
+&lt;p&gt;As a better set of availability metrics, Brewer reiterates the harvest/yield metrics, discussed &lt;a href=&quot;/harvest-yield/#harvest-yield-definition&quot;&gt;here previously&lt;/a&gt;.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;The key insight is that we can influence whether faults impact yield, harvest, or both. Replicated systems tend to map faults to reduced capacity (and to yield at high utilizations), while partitioned systems tend to map faults to reduced harvest, as parts of the database temporarily disappear, but the capacity in queries per second remains the same.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;That is, given a failure, you can either completely answer less queries, or answer queries with less data. Given this data, Brewer goes on to define…&lt;/p&gt;
+
+&lt;h2 id=&quot;the-dq-principle&quot;&gt;The DQ principle&lt;/h2&gt;
+
+&lt;p&gt;The DQ principle is not a strict theorem, but is a useful way of thinking about very constrained systems.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;The intuition behind this principle is that the system’s overall capacity tends to have a particular physical bottleneck, … which is tied to data movement.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;(data per query) x (queries per second) = total amount of data moved per second, which is bounded by this underlying physical limitation.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The DQ value/overall throughput is easily measured, and is a good measure for how overloaded a system is.&lt;sup id=&quot;fnref:1&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; The absolute value isn’t super important, but it’s crucial to understand both how adding/losing nodes affects it relatively and how close to the limit you’re operating at. Load testing is a good way to get an initial measurement for the DQ value of an entire system.&lt;/p&gt;
+
+&lt;h2 id=&quot;graceful-degradation-under-load&quot;&gt;Graceful degradation under load&lt;/h2&gt;
+
+&lt;p&gt;Being able to avoid saturation is a nice thought, but unless you’re horribly over-provisioned, it’s near impossible. Brewer presents three main reasons for this:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;the peak-to-average ratio for giant-scale systems seems to be in the range of 1.6:1 to 6:1.
+    &lt;ul&gt;
+      &lt;li&gt;most traffic follows diurnal and seasonal patterns.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;single-event bursts can generate far above-average traffic.
+    &lt;ul&gt;
+      &lt;li&gt;I’ve seen this nearly everywhere I’ve worked – Stripe sees fairly large flash sales (Humble Bundle dropping a new amazing bundle), the NYT sees a huge news event, etc.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Some faults, such as power failures,  are not independent. Overall DQ drops substantially in these cases.
+    &lt;ul&gt;
+      &lt;li&gt;Often, when AWS fails, it fails multiple systems at once.&lt;sup id=&quot;fnref:2&quot;&gt;&lt;a href=&quot;#fn:2&quot; class=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Given the inherent spikiness of traffic, if you don’t plan how you shed load, you still will shed load, but not necessarily the load you can afford to shed.&lt;/p&gt;
+
+&lt;p&gt;The DQ principle gives you a disciplined way to think about load shedding:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;you can either focus on harvest through admission control, which reduces Q, or on yield through dynamic database reduction, which reduces D, or use a combination of the two.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;There are a couple of different ways this can manifest&lt;sup id=&quot;fnref:3&quot;&gt;&lt;a href=&quot;#fn:3&quot; class=&quot;footnote&quot;&gt;3&lt;/a&gt;&lt;/sup&gt;:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;setting specific SLAs for high-impact businesses, and dropping other low-value queries. Many companies define a golden path for their business – this could be the core charge path at Stripe, or searches on Google, or ride requesting at Lyft – that cannot go down.&lt;/li&gt;
+  &lt;li&gt;reduced data freshness/caching. The cached queries don’t reflect all the data available, and thus have a lower harvest.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;upgrades&quot;&gt;Upgrades&lt;/h2&gt;
+
+&lt;p&gt;Maintenance and upgrades are basically controlled failures.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;completing upgrades without taking down the site is important becasue giant-scale services are updated so frequently.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Online upgrades can be viewed as a temporary reduction in DQ value –&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;ΔDQ = number of nodes to upgrade (&lt;em&gt;n&lt;/em&gt;) * upgrade time per node (&lt;em&gt;u&lt;/em&gt;) * average DQ/node = DQ * &lt;em&gt;u&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;There are three main approaches to upgrades:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Fast reboots
+    &lt;ul&gt;
+      &lt;li&gt;SUPER QUICKLY reboot everything. The entire system is down for &lt;em&gt;u&lt;/em&gt; time, which might not be a huge drop in yield during off-peak hours.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Rolling upgrades
+    &lt;ul&gt;
+      &lt;li&gt;Take one node at a time, which probably doesn’t reduce harvest or yield at all during off-peak hours, since there’s probably enough excess capacity in the system to handle a single node failure. This requires that the new and old systems are inter-compatible, though.&lt;/li&gt;
+      &lt;li&gt;This is the most commonly used upgrade path.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Big flip
+    &lt;ul&gt;
+      &lt;li&gt;Take down and upgrade half the cluster at a time. This allows for incompatible changes – each half of the cluster handles all the traffic at any point in time. That is – you take down part A, and upgrade it while B handles all the traffic. Once A is back up, you cut over traffic to it vian DNS, drain B, then take down B for upgrades.&lt;/li&gt;
+      &lt;li&gt;You need to be over-provisioned by 100% for this to work.&lt;/li&gt;
+      &lt;li&gt;The big flip is pretty powerful, since you don’t have to ensure compatibility between the new and old versions of the world. For example, both Inktomi (in the paper) and Stripe (in my experience) have used this for data center moves. It’s mostly useful for large and complex changes, which are rare.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Brewer also mentions that most systems set up a staging area to perform upgrades, making rollbacks easy. This, in combination with the big flip, sounds a lot like &lt;a href=&quot;http://martinfowler.com/bliki/BlueGreenDeployment.html&quot;&gt;blue-green deploys&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;a-note-about-observabilityrecovery-systems&quot;&gt;A note about observability/recovery systems&lt;/h2&gt;
+
+&lt;p&gt;Relating uptime to mean-time-between-failure (MTBF) and mean-time-to-repair (MTTR):&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;uptime = (MTBF - MTTR)/MTBF&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;you can improve uptime either by reducing the frequency of failures, or reducing the time to fix them. Although the former is more pleasing aesthetically, the latter is much easier to accomplish with evolving systems.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;In other words, it’s just as important to assume failures and improve tooling around debugging and recovery as it is to program defensively and attempt to prevent failures in the first place. In fact, given that new features often reduce MTBF without affecting MTTR much, it’s easier to focus on improving time to recovery.&lt;/p&gt;
+
+&lt;p&gt;There’s a bit about this in &lt;a href=&quot;http://web.mit.edu/2.75/resources/random/How%20Complex%20Systems%20Fail.pdf&quot;&gt;“How Complex Systems Fail”&lt;/a&gt;, on how change constantly introduces new forms of failure, which often interact with each other in unexpected ways to cause failure. Essentially – it’s easier to improve observability, debugging tools, and recovery systems (circuit breakers, etc) than it is to solely prevent failures.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Acceptable quality comes down to software the provides a target MTBF, a low MTTR, and no cascading failures.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;related-papers-where-to-go-from-here&quot;&gt;Related Papers (where to go from here)&lt;/h2&gt;
+
+&lt;p&gt;Happy to hear suggestions!&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;http://web.mit.edu/2.75/resources/random/How%20Complex%20Systems%20Fail.pdf&quot;&gt;How Complex Systems Fail.&lt;/a&gt;. Richard I. Cook.
+    &lt;ul&gt;
+      &lt;li&gt;This is an &lt;em&gt;incredibly&lt;/em&gt; spot-on paper about systems failures. It also motivates blameless postmortems very effectively.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.cs.berkeley.edu/~brewer/cs262b-2004/PODC-keynote.pdf&quot;&gt;Towards Robust Distributed Systems&lt;/a&gt;. Eric Brewer.
+    &lt;ul&gt;
+      &lt;li&gt;A fairly broad summary of the CAP theorem, harvest/yield, the DQ principle, and how those might apply to system design.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.24.3690&amp;amp;rep=rep1&amp;amp;type=pdf&quot;&gt;Harvest, Yield, and Scalable Tolerant Systems&lt;/a&gt;. Brewer &amp;amp; Fox.
+    &lt;ul&gt;
+      &lt;li&gt;Elaborates on the harvest/yield metrics.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;footnotes&quot;&gt;footnotes&lt;/h2&gt;
+
+&lt;div class=&quot;footnotes&quot;&gt;
+  &lt;ol&gt;
+    &lt;li id=&quot;fn:1&quot;&gt;
+      &lt;p&gt;This is true only for data-intensive sites. If the system is computationally-bound, or bottlenecked by external systems, there’s not much improving DQ can do. Most large services tend to be data-bound, though. &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:2&quot;&gt;
+      &lt;p&gt;I’d give a small fortune for a dependency graph of their systems.&lt;br /&gt;SQS and Auto-Scaling groups &lt;a href=&quot;https://aws.amazon.com/message/5467D2/#Impact_on_Other_Services&quot;&gt;are dependent on DynamoDB&lt;/a&gt;. ELB and RDS &lt;a href=&quot;https://aws.amazon.com/message/2329B7/&quot;&gt;depend on EBS&lt;/a&gt; (&lt;a href=&quot;https://aws.amazon.com/message/680342/&quot;&gt;again&lt;/a&gt;). What else? &lt;a href=&quot;#fnref:2&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:3&quot;&gt;
+      &lt;p&gt;I’ve omitted the third option Brewer presents: cost-based admission control, which estimates the difficulty (DQ cost) of the query before load-shedding. You can deny a very thorough unindexed query, for example, to enable several quicker ones. This can be taken further, to probabilistically blocking queries. &lt;a href=&quot;#fnref:3&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/div&gt;
+</description>
+        <pubDate>Mon, 09 Nov 2015 00:00:00 -0800</pubDate>
+        <link>http://www.kiranbot.com/brewer-giant-scale-services</link>
+        <guid isPermaLink="true">http://www.kiranbot.com/brewer-giant-scale-services</guid>
+        
+        <category>papers</category>
+        
+        <category>distributed-systems</category>
+        
+        
+        <category>computers</category>
+        
+      </item>
+    
+      <item>
+        <title>(paper report) CAP Twelve Years Later</title>
+        <description>&lt;p&gt;&lt;em&gt;This is part of a series of posts I’m writing for my version of NaNoWriMo, where I summarize/review papers I’ve read recently. These aren’t quite papers – they’re publications in a magazine.&lt;/em&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Eric Brewer. &lt;a href=&quot;http://www.infoq.com/articles/cap-twelve-years-later-how-the-rules-have-changed&quot;&gt;CAP Twelve Years Later: How the “Rules” Have Changed&lt;/a&gt;. (IEEE, 2012)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;This is an article from Computer magazine that expands on some misconceptions about the CAP theorem. It mostly focuses on plans for operation during a partition, and recovery afterward.&lt;/p&gt;
+
+&lt;h3 id=&quot;a-note-on-oversimplification&quot;&gt;(A note on oversimplification)&lt;/h3&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;The “2 of 3” formulation was always misleading, because it tended to oversimplify the tensions among properties.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Talking about consistency, availability, and partition tolerance requires more nuance. CAP prohibits only a small part of the design space – it’s lazy to completely give up on C, or A, or P because the perfect combination of all three is impossible.&lt;/p&gt;
+
+&lt;p&gt;Also, the C and A tradeoff isn’t a single choice for a system. Large are, in turn, composed of many subsystems that might be making different CAP choices. The choice can even change depending on the operation being performed, or the data being accessed.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;All three properties are more continuous than binary. The modern CAP goal should be to maximize combinations of consistency and availability that make sense for the specific application. Such an approach incorporates plans for operation during a partition and for recovery afterward.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Also, many systems are beginning to offer a disconnected mode of operation.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;During a partition, allowing one side to update state will cause the nodes to become inconsistent, therefore forfeiting C. Likewise, if the choice is to preserve consistency, one side of the partition should act as if it is unavailable, thus forfeiting P. Only when nodes communicate is it possible to preserve both consistency and availability.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;If users cannot reach the service at all, there is no choice between C and A.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;on-partition-resilience&quot;&gt;On partition resilience&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Such an approach incorporates plans for operation during a partition and for recovery afterward.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;A strategy that is partition-resilient:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;detects the start of a partition,&lt;/li&gt;
+  &lt;li&gt;enters an explicit partition mode that may limit some operations, and&lt;/li&gt;
+  &lt;li&gt;initiates a recovery process to restore consistency and compensate for mistakes made during a partition.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;detecting-partitions&quot;&gt;1. Detecting partitions&lt;/h3&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;A partition is a time bound on communication.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;The partition decision happens in response to an operation timing out. The system can either:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;cancel the operation and thus decrease availability, or&lt;/li&gt;
+  &lt;li&gt;proceed with the operation and thus risk inconsistency.
+    &lt;ul&gt;
+      &lt;li&gt;retrying communication indefinitely (via paxos or 2PC) in the face of a partition is in essence choosing C over A&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;This has some interesting implications for partitions:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;This means that there is no global view of a partition – some nodes might detect a partition, and some might not.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Partitions can also be one-way – node A might be timing out when connecting to node B, but node B can see node A without issues.&lt;/p&gt;
+
+&lt;p&gt;Because partitions are tied to latency, system designers can tweak the system’s sensitivity to partitions.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Designers can set time bounds intentionally according to target response times: systems with tighter bounds will likely enter partition mode more often and at times when the network is merely slow and not actually partitioned.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;partition-mode&quot;&gt;2. Partition mode&lt;/h3&gt;
+
+&lt;p&gt;The set of operations that are restricted during a partition depends on the invariants the system must maintain. Ideally, you want to restrict any operations that might violate the invariant, such as externalized events (talking to banking systems, sending emails, etc.)&lt;/p&gt;
+
+&lt;p&gt;Methods for dealing with this:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;use &lt;a href=&quot;https://en.wikipedia.org/wiki/Version_vector&quot;&gt;version vectors&lt;/a&gt; to track atomic operations.
+    &lt;ul&gt;
+      &lt;li&gt;When the partition heals, you can reorder the vectors to attempt to emulate causal consistency.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;to deal with externalized events, build a write-ahead log in partition mode, and replay these events when the system comes back up.
+    &lt;ul&gt;
+      &lt;li&gt;For example: instead of reaching out to credit card networks during a partition, the system records the intent and execute it after the recovery.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;This presents a user-interface challenge: “[communicating] that tasks are in progress, but not complete.” Some systems present different UI views in disconnected operation, like Google Docs or Bayou.&lt;/p&gt;
+
+&lt;h3 id=&quot;partition-recovery&quot;&gt;3. Partition recovery&lt;/h3&gt;
+
+&lt;p&gt;When the partition heals, the system has (hopefully) kept a careful log of operations that happened during the partition. With this history, the system can reconcile its state and make compensations for any inconsistencies/mistakes made during partition mode.&lt;/p&gt;
+
+&lt;p&gt;The method used to merge the inconsistent narratives varies by use case. Some systems require explicit manual intervention (git, wiki systems) to resolve conflicts. Some systems always choose to keep additions, some do last-writer wins, and still others constrain operations during offline mode.&lt;/p&gt;
+
+&lt;p&gt;CRDTs (commutative repicated data types) are really powerful tools for state convergence after a partition.&lt;/p&gt;
+
+&lt;p&gt;That said, CRDTs are only useful for locally-verifiable invariants – you can’t use them to handle externalized calls. Methods for handling externalized mistakes made during a partition depend on the application.&lt;/p&gt;
+
+&lt;p&gt;As an example, Brewer brings up bank operations during a partition. Because of communication delays, the banking system defines the amount of risk it’s willing to tolerate, and then relies on auditing and compensation (overdraft fees) to make up the difference.&lt;/p&gt;
+
+&lt;h4 id=&quot;a-note-on-eventual-consistency&quot;&gt;(a note on eventual consistency)&lt;/h4&gt;
+
+&lt;p&gt;Reconciling divergent state is important not just for healing partitions, but also for latency improvements in the general case. Brewer brings up some examples of consistency models optimized for performance:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Yahoo’s PNUTS:
+    &lt;ul&gt;
+      &lt;li&gt;the local data copy is the source of truth, since single user data is naturally partitioned according to the user’s location.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Facebook’s’ odd RYW scheme
+    &lt;ul&gt;
+      &lt;li&gt;the master copy is always in one location, so a remote user reads from the closer (potentially stale) copy. When the user issues a write, the update goes to the master copy, and so do all reads for the next 20s, which is much larger than the replication delay.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;similar-papers-where-to-go-from-here&quot;&gt;Similar Papers (where to go from here)&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.cs.berkeley.edu/~brewer/cs262b-2004/PODC-keynote.pdf&quot;&gt;Towards Robust Distributed Systems&lt;/a&gt;. Eric Brewer.
+    &lt;ul&gt;
+      &lt;li&gt;A fairly broad summary of the CAP theorem, harvest/yield, the DQ principle, and how those might apply to system design.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://codahale.com/you-cant-sacrifice-partition-tolerance/&quot;&gt;You Can’t Sacrifice Partition Tolerance&lt;/a&gt;. Coda Hale.
+    &lt;ul&gt;
+      &lt;li&gt;mostly what it says on the tin. Plus thoughts about evaluating systems by their CAP properties.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://zoo.cs.yale.edu/classes/cs422/2013/bib/terry95managing.pdf&quot;&gt;Managing Update Conflicts in Bayou&lt;/a&gt;.
+    &lt;ul&gt;
+      &lt;li&gt;A very early example of optimistically handling concurrent updates. The paper describes a hypothetical calendar app with an offline mode, and methods for reconciling state after reconnecting to the internet.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://hal.upmc.fr/file/index/docid/555588/filename/techreport.pdf&quot;&gt;A comprehensive study of
+Convergent and Commutative Replicated Data Types&lt;/a&gt;.
+    &lt;ul&gt;
+      &lt;li&gt;This is a fairly long (50 pages!), and fairly formal paper that introduces the idea of convergent data types. For a shorter/lighter version, &lt;a href=&quot;https://vimeo.com/43903960&quot;&gt;this video&lt;/a&gt; by Sean Cribbs is a good introduction.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+</description>
+        <pubDate>Mon, 09 Nov 2015 00:00:00 -0800</pubDate>
+        <link>http://www.kiranbot.com/cap-twelve-years-later</link>
+        <guid isPermaLink="true">http://www.kiranbot.com/cap-twelve-years-later</guid>
+        
+        <category>papers</category>
+        
+        <category>distributed-systems</category>
+        
+        
+        <category>computers</category>
+        
+      </item>
+    
+      <item>
+        <title>(Paper report) Harvest/Yield</title>
+        <description>&lt;p&gt;&lt;em&gt;This is part of a series of posts I’m writing for my version of NaNoWriMo, where I summarize/review papers I’ve read recently.&lt;/em&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Armando Fox &amp;amp; Eric Brewer. &lt;a href=&quot;http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.24.3690&amp;amp;rep=rep1&amp;amp;type=pdf&quot;&gt;Harvest, Yield, and Scalable Tolerant Systems&lt;/a&gt;. (Hot Topics in Operating Systems, 1999)&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;tl;dr: characterize graceful degradation mechanisms in terms of harvest (the fraction of data reflected in the response) and yield (the probability of completing a request)&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;overview&quot;&gt;Overview&lt;/h2&gt;
+
+&lt;p&gt;Coda Hale’s blog post on partition tolerance&lt;sup id=&quot;fnref:1&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; summarizes this beautifully, so I’m just going to pull from him.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Despite your best efforts, your system will experience enough faults that it will have to make a choice between reducing yield (i.e., stop answering requests) and reducing harvest (i.e., giving answers based on incomplete data). This decision should be based on business requirements.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;The easiest/default error-handling setup degrades the system entirely (affecting the yield). Instead, Fox and Brewer suggest an alternative approach to increasing availability: mapping faults to a reduction in the amount of data a system operates on – in other words, by weakening the consistency guarantees of your system.&lt;/p&gt;
+
+&lt;p&gt;It’s really easy to point to the CAP theorem and assert that systems can’t have both strong consistency and availability, ending the discussion there. While some systems absolutely can’t tolerate imperfect/degraded answers, there are a wide variety of systems that can tolerate some other point on the consistency spectrum, especially for queries. Clearly defining consistency/availability goals, especially for a system composed of many independent services, is crucial to improving availability.&lt;/p&gt;
+
+&lt;div id=&quot;harvest-yield-definition&quot;&gt;Given this need, the authors define 2 metrics for correct behavior in a distributed system:&lt;/div&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;yield = requests completed successfully / total requests
+    &lt;ul&gt;
+      &lt;li&gt;note: yield is related to uptime, but deals with the number of queries missed, not just time down. (Being down for 10 minutes on Cyber Monday is not the same as being down for 10 minutes at 3 AM on a Tuesday.)&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;harvest = data in response / complete data
+    &lt;ul&gt;
+      &lt;li&gt;for example: if 1% of a sharded data store goes down, the request drops 1% of the data it would have returned otherwise, giving it 99% harvest.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Our approaches tolerate partial failures by emphasizing simple composition mechanisms that promote fault containment, and by translating partial failure modes into engineering mechanisms that provide smoothly-degrading functionality rather than lack of availability of the service as a whole.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;The authors begin by talking about harvest degradation mechanisms within a single monolithic system (responding to failures by operating on partial data), and about harvest degradation in a system composed of many independent services.&lt;/p&gt;
+
+&lt;h2 id=&quot;reducing-harvest-probabilistic-availability&quot;&gt;Reducing harvest: probabilistic availability&lt;/h2&gt;
+
+&lt;p&gt;(note: there’s not much I can say here that hasn’t been said better by Coda&lt;sup id=&quot;fnref:1:1&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;, especially starting from “A Readjustment In Focus”)&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Nearly all systems are probabilistic whether they realize it or not. … Availability maps naturally to probabilistic approaches.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;A point that I found interesting in here: replicating all data (not just highly-accessed data) might have relatively little impact on harvest/yield. Temporary loss of data that isn’t heavily accessed is unlikely to show up in yield numbers, since it’s unlikely that requests were made against that data, anyway.&lt;/p&gt;
+
+&lt;p&gt;The authors also mention trading off latency for harvest – a system can declare with some confidence that it’s received enough data to make a satisfactory response, without waiting on straggler information, which reminded me of the watermarks in Google’s Millwheel pipeline.&lt;sup id=&quot;fnref:4&quot;&gt;&lt;a href=&quot;#fn:4&quot; class=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;reducing-harvest-compartmentalization&quot;&gt;Reducing harvest: compartmentalization&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Some large applications can be decomposed into subsystems that are independently intolerant to harvest degradation (ie, they fail by reducing yield), but whose independent failure can allows the overall application to continue functioning with reduced utility.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Fox and Brewer emphasize orthogonal system design in this paper. A system with orthogonal services is composed of mechanisms that have essentially no runtime interface to each other. They cite Nancy Leveson’s claim&lt;sup id=&quot;fnref:2&quot;&gt;&lt;a href=&quot;#fn:2&quot; class=&quot;footnote&quot;&gt;3&lt;/a&gt;&lt;/sup&gt; that “most failures in complex systems result from unexpected inter-component interaction, rather than intra-component bugs.”&lt;/p&gt;
+
+&lt;p&gt;Compartmentalization&lt;sup id=&quot;fnref:3&quot;&gt;&lt;a href=&quot;#fn:3&quot; class=&quot;footnote&quot;&gt;4&lt;/a&gt;&lt;/sup&gt; is a related concept from fire safety codes. It divides a building into several independent compartments that can be isolated in case of a fire, allowing continuing operations and damage containment. I like to think of building fire doors between services: clear entry/exit points with protection mechanisms that can be enabled to contain the spread of system fires. This could be something like circuit-breaker code to shed load in the case of dependent systems, or designing services that can entirely down without affecting the operation of another. If a service errors downstream, it’s easy to throw up hands and error out the whole system. Error-handling code is tricky to write, and far enough off the execution path that it’s rarely tested, which is where gamedays and &lt;code&gt;kill -9&lt;/code&gt; tests&lt;sup id=&quot;fnref:6&quot;&gt;&lt;a href=&quot;#fn:6&quot; class=&quot;footnote&quot;&gt;5&lt;/a&gt;&lt;/sup&gt; come into play.&lt;/p&gt;
+
+&lt;h2 id=&quot;related-papers-where-to-go-from-here&quot;&gt;Related Papers (where to go from here)&lt;/h2&gt;
+
+&lt;p&gt;This is what I’ve read so far. Happy to hear suggestions!&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;http://codahale.com/you-cant-sacrifice-partition-tolerance/&quot;&gt;You Can’t Sacrifice Partition Tolerance&lt;/a&gt;. Coda Hale.
+    &lt;ul&gt;
+      &lt;li&gt;mostly what it says on the tin. Plus thoughts about evaluating systems by their CAP properties.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://www.eecs.berkeley.edu/~brewer/cs262b-2004/PODC-keynote.pdf&quot;&gt;Towards robust distributed systems&lt;/a&gt;, Brewer’s 2000 PODC keynote.
+    &lt;ul&gt;
+      &lt;li&gt;A fairly comprehensive overview of CAP, its tradeoffs, and its applications to distributed systems design. (as a bonus: also a decent overview of the next 2 papers.)&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://www.cs.berkeley.edu/~brewer/Giant.pdf&quot;&gt;Lessons from giant-scale services&lt;/a&gt;. Brewer.
+    &lt;ul&gt;
+      &lt;li&gt;Suggests the data/query corollary to harvest/yield: harvest * yield ~ constant&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://www.infoq.com/articles/cap-twelve-years-later-how-the-rules-have-changed&quot;&gt;CAP twelve years later&lt;/a&gt;. Brewer.
+    &lt;ul&gt;
+      &lt;li&gt;How folks have (mis)applied the CAP theorem to distributed system design over the last twelve years. Also: partitions are defined by latency guarantees, and eventual consistency is a thing.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;footnotes&quot;&gt;footnotes&lt;/h2&gt;
+
+&lt;div class=&quot;footnotes&quot;&gt;
+  &lt;ol&gt;
+    &lt;li id=&quot;fn:1&quot;&gt;
+      &lt;p&gt;&lt;a href=&quot;http://codahale.com/you-cant-sacrifice-partition-tolerance/&quot;&gt;You Can’t Sacrifice Partition Tolerance&lt;/a&gt; &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt; &lt;a href=&quot;#fnref:1:1&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;sup&gt;2&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:4&quot;&gt;
+      &lt;p&gt;MillWheel’s watermark is a lower bound (often heuristically established) on event times that have been processed by the pipeline, used to determine how complete the pipeline’s view of the world is at a certain time. &lt;a href=&quot;#fnref:4&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:2&quot;&gt;
+      &lt;p&gt;Her book’s &lt;a href=&quot;http://www.amazon.com/Safeware-Computers-Nancy-G-Leveson/dp/0201119722/ref=sr_1_1?ie=UTF8&amp;amp;qid=1446372937&amp;amp;sr=8-1&amp;amp;keywords=safeware&quot;&gt;on Amazon&lt;/a&gt;. This sounds like a series of case studies, which is the best! I love scary systems cautionary tales. &lt;a href=&quot;#fnref:2&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:3&quot;&gt;
+      &lt;p&gt;&lt;a href=&quot;https://en.wikipedia.org/wiki/Compartmentalization_(fire_protection)&quot;&gt;Compartmentalization&lt;/a&gt; &lt;a href=&quot;#fnref:3&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:6&quot;&gt;
+      &lt;p&gt;&lt;a href=&quot;https://stripe.com/blog/game-day-exercises-at-stripe&quot;&gt;gamedays and &lt;code&gt;kill -9&lt;/code&gt; tests&lt;/a&gt; &lt;a href=&quot;#fnref:6&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/div&gt;
+</description>
+        <pubDate>Sun, 01 Nov 2015 00:00:00 -0700</pubDate>
+        <link>http://www.kiranbot.com/harvest-yield</link>
+        <guid isPermaLink="true">http://www.kiranbot.com/harvest-yield</guid>
+        
+        <category>papers</category>
+        
+        <category>distributed-systems</category>
+        
+        
+        <category>computers</category>
+        
+      </item>
+    
+      <item>
+        <title>exciting new ways to learn languages</title>
+        <description>&lt;p&gt;&lt;em&gt;I’ve been digging through some of my old internet accounts, and have found some writing from past-me. I think I might start editing/publishing a few pieces, mostly from college essays, just as vignettes of 16-year-old Kiran.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;This is an excerpt from a longer essay about my learning style.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;The beginning of eighth grade stands out with extreme clarity in my memory. On my first day at a new school in a new country, three completely new languages were thrust upon me—French and Hindi as subjects, and Tamil, as the main spoken language. I came home in tears. Over the course of the year, I learned Hindi fairly well – starting from struggling with the script to writing short essays, earning high 80’s on exams. Knowing how to speak Telugu, a Dravidian language, meant that I could (sometimes) make out what people said in Tamil, and, soon, I could converse fluently with my friends. The script, however, was completely unfamiliar, which made riding public buses slightly difficult. My technique had been to jump on the first bus that came by, ask where it was going, then jump off quickly if I had chosen incorrectly. I got far more bruises and scrapes than I liked from using that method on moving buses. After a while, I began to notice bilingual billboards, with an ad in Tamil and an English transliteration underneath. A month of long bus rides later, I could read and write in Tamil.&lt;/p&gt;
+</description>
+        <pubDate>Tue, 27 Oct 2015 00:00:00 -0700</pubDate>
+        <link>http://www.kiranbot.com/college-essays-languages</link>
+        <guid isPermaLink="true">http://www.kiranbot.com/college-essays-languages</guid>
+        
+        <category>college-essays</category>
+        
+        <category>writing</category>
+        
+        
+        <category>writing</category>
+        
+      </item>
+    
+      <item>
+        <title>For the pleasure of it</title>
+        <description>&lt;p&gt;&lt;em&gt;I’ve been digging through some of my old internet accounts, and have found some writing from past-me. I think I might start editing/publishing a few pieces, mostly from college essays, just as vignettes of 16-year-old Kiran.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;big&gt;&lt;strong&gt;We know you lead a busy life, full of activities, many of which are required of you. Tell us about something you do for the pleasure of it. (100 words or fewer)&lt;/strong&gt;&lt;big&gt;&lt;/big&gt;&lt;/big&gt;&lt;/p&gt;
+
+&lt;p&gt;Cooking is magic. See the eggplants? See the tofu? Now, here’s a stove—watch carefully. I have dinner! The food I make comes from many cuisines, often including imaginary ones. When I do use a recipe, there is one rule I always abide by: Never follow the instructions exactly. One unexpected ingredient* can make a dish. Every now and then, though, after hours working on the meal, I end up with inedible messes. Ingredients don’t always combine the way I intended, but massive disasters are actually half the fun. And also what PB&amp;amp;J is meant for.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;*Ed. note, almost a decade later: I’ve always loved spicy food. I had a good friend review this essay when I first wrote it, and his response was perfect:
+    &lt;ul&gt;
+      &lt;li&gt;“unexpected” … [SURPRISE CAPSAICIN!]?&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Tue, 27 Oct 2015 00:00:00 -0700</pubDate>
+        <link>http://www.kiranbot.com/college-essays-cooking</link>
+        <guid isPermaLink="true">http://www.kiranbot.com/college-essays-cooking</guid>
+        
+        <category>college-essays</category>
+        
+        <category>writing</category>
+        
+        
+        <category>writing</category>
+        
+      </item>
+    
+      <item>
+        <title>Notes from Strangeloop 2015</title>
+        <description>&lt;p&gt;Last week, I attended the Strange Loop conference in St. Louis for the first time! This was a comprehensive and long conference, so pardon my long-windedness!&lt;/p&gt;
+
+&lt;h2 id=&quot;talks&quot;&gt;Talks&lt;/h2&gt;
+
+&lt;p&gt;These are the talks and workshops I ended up going to, arranged in no particular order. The conference covered a wide range of topics, and I mostly went to distributed systems-y talks.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Property-Based Testing Workshop&lt;/strong&gt;, Jessica Kerr&lt;/p&gt;
+
+    &lt;p&gt;This was an interactive lecture/workshop, and I really enjoyed this. Jessica introduced property-based testing to the group, which is the idea of using generalized properties (or behavior) to randomly test your application. You define data generators to produce randomized input, and compose those into behavioral tests.&lt;/p&gt;
+
+    &lt;p&gt;Shrinking really blew my mind – when you define data generators, you can define how to simplify the randomized data that your test is feeding into your application. If the framework runs into a failed test, it can shrink the input until it finds the minimal failing case! (&lt;a href=&quot;http://stackoverflow.com/questions/16968549/what-is-a-shrink-with-regard-to-haskells-quickcheck&quot;&gt;This StackOverflow answer&lt;/a&gt; has a little more detail.)&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=ohvPnJYUW1E&quot;&gt;Architectural Patterns of Resilient Distributed Systems&lt;/a&gt;&lt;/strong&gt;, Ines Sombra&lt;/p&gt;
+
+    &lt;p&gt;This was one of my favorite talks of the conference. I’ve been working on Stripe’s systems team for about 1.5 years now, and I found a lot of Ines’s anecdotes incredibly familiar. This was a really valuable talk, and &lt;a href=&quot;https://github.com/Randommood/Strangeloop2015&quot;&gt;all of the papers she recommended&lt;/a&gt; are now on my reading list. :)&lt;/p&gt;
+
+    &lt;p&gt;&lt;a href=&quot;https://speakerdeck.com/randommood/architectural-patterns-of-resilient-distributed-systems&quot;&gt;The slides&lt;/a&gt; are really dense and are worth a read just on their own.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=TlU1opuCXB0&quot;&gt;Hopelessness and Confidence in Distributed Systems Design&lt;/a&gt;&lt;/strong&gt;, Camille Fournier&lt;/p&gt;
+
+    &lt;p&gt;Lots of cringing as I recognized myself in this talk. Camille’s seen some shit.&lt;/p&gt;
+
+    &lt;p&gt;This was another one of my favorite talks, and I’m excited to read the two references she mentioned: &lt;a href=&quot;http://blog.empathybox.com/post/19574936361/getting-real-about-distributed-system-reliability&quot;&gt;getting real about distributed system reliability&lt;/a&gt; and &lt;a href=&quot;http://the-paper-trail.org/blog/distributed-systems-theory-for-the-distributed-systems-engineer/&quot;&gt;the distributed systems theory resources&lt;/a&gt;.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=9xFfOhasiOE&quot;&gt;CRDTs Illustrated&lt;/a&gt;&lt;/strong&gt;, Arnout Engelen&lt;/p&gt;
+
+    &lt;p&gt;Pretty diagrams of 2 kinds of eventually consistent data types. This was a great introduction to the concept of CRDTs.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=lsKaNDj4TrE&quot;&gt;Distributed, Eventually Consistent Computations&lt;/a&gt;&lt;/strong&gt;, Christopher Meiklejohn&lt;/p&gt;
+
+    &lt;p&gt;This and the CRDTs Illustrated talk worked really well together. Christopher talked about his work on a programming model, called Lasp, where all the data structures are CRDTs, and can be composed into CRDT-style structures.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=8xoowbbzxTA&quot;&gt;Sweaters as a Service&lt;/a&gt;&lt;/strong&gt;, Amy Wibowo&lt;/p&gt;
+
+    &lt;p&gt;I really enjoy Amy’s speaking – she’s engaging, funny, and infectiously enthusiastic! I’ve done some (very minimal!) messing with knitting machines before, so it was really fun to see everything it takes to set it up. This was a great talk about hacking something old, and putting it on the internet!&lt;/p&gt;
+
+    &lt;p&gt;Also, doges and grumpy cats.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=9RMOc0SwRro&quot;&gt;Apache Kafka and the Next 700 Stream Processing Systems&lt;/a&gt;&lt;/strong&gt;, Jay Kreps&lt;/p&gt;
+
+    &lt;p&gt;I’ve worked a bit with Kafka and other stream processing systems before, so there wasn’t that much new in this talk. It’s a great overview of Kafka as a stream processing system, though, and references &lt;a href=&quot;https://engineering.linkedin.com/distributed-systems/log-what-every-software-engineer-should-know-about-real-time-datas-unifying&quot;&gt;Jay Kreps’ absolutely fantastic blog post about logs&lt;/a&gt;.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=vBhg2p8aAQ0&quot;&gt;The Programming Language Called Classical Chinese&lt;/a&gt;&lt;/strong&gt;, David Branner&lt;/p&gt;
+
+    &lt;p&gt;This talk explains classical Chinese grammar in the context of context-free grammars. A context-free grammar uses recursive rewriting rules to generate patterns of strings. In this talk, David talks about recursively combining nouns and verbs to form classical Chinese sentences.&lt;/p&gt;
+
+    &lt;p&gt;I know very little about either of these subjects, but this was well-explained!&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=ZGIAypUUwoQ&quot;&gt;When “Worst” is Best (in Distributed Systems)&lt;/a&gt;&lt;/strong&gt;, Peter Bailis&lt;/p&gt;
+
+    &lt;p&gt;This was essentially Peter’s &lt;a href=&quot;http://www.bailis.org/blog/worst-case-distributed-systems-design/&quot;&gt;Worst-Case Distributed Systems Design blog post&lt;/a&gt; in talk form. He stressed building coordination-free systems, which seemed to be a theme at this conference. I’m really intrigued by the principle of reducing shared state across systems.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=gy82S8tjJX8&quot;&gt;From Protesting to Programming: Becoming a Tech Activist&lt;/a&gt;&lt;/strong&gt;, Abby Bobé&lt;/p&gt;
+
+    &lt;p&gt;Idalin was a fantastic choice for a keynote speaker. This paired really well with Morgan’s keynote about the importance of security and activism the next day.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=k4ypqzOShZs&quot;&gt;Security for Humans: Privacy and Coercion Resistant Design&lt;/a&gt;&lt;/strong&gt;, Morgan Marquis-Boire&lt;/p&gt;
+
+    &lt;p&gt;A riveting talk about nation-state malware research.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=J3C79CDqeW4&amp;amp;list=PLcGKfGEEONaCIl5eU53uPBnRJ9rbIH32R&amp;amp;index=31&quot;&gt;A History of Programming Languages for Two Voices&lt;/a&gt;&lt;/strong&gt;, David Nolan and Michael Bernstein&lt;/p&gt;
+
+    &lt;p&gt;David and Michael put together a mixtape juxtaposing trends in music and trends in programming languages. This was a really fun and engaging talk!&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=-6nrhSdu--s&quot;&gt;When the OS gets in the way&lt;/a&gt;&lt;/strong&gt;, Mark Price&lt;/p&gt;
+
+    &lt;p&gt;This was a talk about optimizing service performance for sub-millisecond replies. This was a dive into the Linux kernel – tricks for optimizing the scheduler, and optimizing what CPUs code runs on. I haven’t had reason to dig into this level of optimization, but it’s cool to know that people are operating at this scale!&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=vNiyDbcfJDE&quot;&gt;How Machine Learning Helps Cancer Research&lt;/a&gt;&lt;/strong&gt;, Evelina Gabasova&lt;/p&gt;
+
+    &lt;p&gt;This was a talk about some machine learning models that are composed into cancer research tools. This was a very fluffy/insubstantial overview, but the 30-minute slot was probably too short for a more in-depth view. I’d love to learn more!&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;talks-i-missed-that-ill-be-watching-the-video-for&quot;&gt;Talks I missed, that I’ll be watching the video for&lt;/h2&gt;
+
+&lt;p&gt;The problem with multi-track conferences is the difficulty of choosing what to see. Luckily, all the talks were recorded and put online in record speed, so I can catch up on them now1&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=IOiZatlZtGU&quot;&gt;Propositions as Types&lt;/a&gt;&lt;/strong&gt;, Philip Wadler&lt;/p&gt;
+
+    &lt;p&gt;My friend Pam recommended this &lt;em&gt;highly&lt;/em&gt;. I have no background in programming languages, so I’m super excited to see this!&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=Wahc9Ocka1g&quot;&gt;Strange Loops: Capturing Knots With Powerful Notations&lt;/a&gt;&lt;/strong&gt;, Kay Ye&lt;/p&gt;
+
+    &lt;p&gt;Knot theory sounds fascinating.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=GNc1t6Q5Dls&quot;&gt;Non-Imperative Network Programming&lt;/a&gt;&lt;/strong&gt;, Mindy Preston&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Ideology&lt;/strong&gt;, Gary Bernhardt&lt;/p&gt;
+
+    &lt;p&gt;I’m sad I missed this! Someone told me that the last 2 years have had talks for and against strong types, and this was meant to be a response to both of those talks. (Julia &lt;a href=&quot;http://jvns.ca/blog/2014/09/24/strange-loop-2014/#types&quot;&gt;wrote up a bit&lt;/a&gt; about the types argument from last year.) Unfortunately, Gary Bernhardt didn’t want this taped and publish, so I’ve missed this forever. :(&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=uEFrE6cgVNY&quot;&gt;Evidence-oriented Programming&lt;/a&gt;&lt;/strong&gt;, Andreas Stefik&lt;/p&gt;
+
+    &lt;p&gt;I now want to watch this purely off of Tavish’s tl;dr:&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote class=&quot;twitter-tweet&quot; lang=&quot;en&quot;&gt;&lt;p lang=&quot;en&quot; dir=&quot;ltr&quot;&gt;&lt;a href=&quot;https://twitter.com/tavarm&quot;&gt;@tavarm&lt;/a&gt; tl;dr your opinions on what prog lang syntax choices are easy to understand aren&amp;#39;t worth much and scientific studies are better&lt;/p&gt;&amp;mdash; tavish armless (@tavarm) &lt;a href=&quot;https://twitter.com/tavarm/status/650792069070393344&quot;&gt;October 4, 2015&lt;/a&gt;&lt;/blockquote&gt;
+&lt;script async=&quot;&quot; src=&quot;//platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=R2Aa4PivG0g&quot;&gt;I See What You Mean&lt;/a&gt;&lt;/strong&gt;, Peter Alvaro&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=5ZjhNTM8XU8&quot;&gt;Transactions: myths, surprises and opportunities&lt;/a&gt;&lt;/strong&gt;, Martin Kleppmann&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;other-things&quot;&gt;Other Things!&lt;/h2&gt;
+
+&lt;p&gt;OMG &lt;a href=&quot;http://www.citymuseum.org/&quot;&gt;THE CITY MUSEUM&lt;/a&gt;. The St. Louis City Museum is a weird, fantastic place, with weird fantastic things. I ran around in a giant hamster wheel, took a 10-story slide, and just generally climbed over all of the things.&lt;/p&gt;
+
+&lt;p&gt;&lt;img class=&quot;right&quot; src=&quot;/images/strangeloop-2015/hamster-wheel.jpg&quot; title=&quot;St. Louis City Museum&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The conference hotel was an old train station, and the main lobby looks like St. Louis’s version of Grand Central.&lt;/p&gt;
+
+&lt;p&gt;Seeing everyone from everywhere was also fantastic! This seems to be one of those conferences that all the computer people come to – the hallway track was delightful. I met a bunch of friends from the internet, and got to see a lot of people I don’t normally. The community around Strange Loop is really vibrant, and I’d come back just for that.&lt;/p&gt;
+
+&lt;p&gt;&lt;img class=&quot;left&quot; src=&quot;/images/strangeloop-2015/train-station.jpg&quot; title=&quot;Train Station&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Also, there was a giant BBQ festival going on the same weekend as StrangeLoop, which was fantastic.&lt;/p&gt;
+
+&lt;p&gt;&lt;img class=&quot;right&quot; src=&quot;/images/strangeloop-2015/bbq.jpg&quot; title=&quot;St. Louis BBQ&quot; /&gt;&lt;/p&gt;
+</description>
+        <pubDate>Thu, 01 Oct 2015 00:00:00 -0700</pubDate>
+        <link>http://www.kiranbot.com/notes-from-strange-loop-2015</link>
+        <guid isPermaLink="true">http://www.kiranbot.com/notes-from-strange-loop-2015</guid>
+        
+        <category>strangeloop</category>
+        
+        <category>conferences</category>
+        
+        
+        <category>computers</category>
+        
+      </item>
+    
+      <item>
+        <title>Un plan de Paris</title>
+        <description>&lt;p&gt;I’m a little bit of a map nerd.&lt;/p&gt;
+
+&lt;p&gt;I visit Stonemountain and Daughter fairly often, now that Harold lives a 10 minute walk away. It’s a delight of a store, and has a huge high-quality quilting cotton section. This fabric popped out at me as I walked past – maps! and an understated color!&lt;/p&gt;
+
+&lt;p&gt;&lt;img class=&quot;left&quot; src=&quot;/images/paris-map-dress/fabric.jpg&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Before you ask – the map isn’t quite geographically accurate (it has to tile, after all!), but it’s still fairly comprehensive.&lt;/p&gt;
+
+&lt;p&gt;The fabric’s from Moda textiles’ Passport collection, in the Paris flea market colorway, I think. It’s a mid-weight quilting cotton, so it’s a little stiff for a full dress, but I decided to wing it, anyway. The bodice’s princess seams could handle a bit of structure, anyway. The body of the fabric works really well for the half-circle skirt, though!&lt;/p&gt;
+
+&lt;p&gt;I made this dress in the beginning of September, but it’s taken me forever to actually blog this. (I’ve backdated the post, because I like keeping track of when I actually made the thing.) In November, Harold and I impulse-drove to Livermore to go visite a few wineries. Harold’s been doing some work with researchers at UC Davis on how grapevines respond to drought conditions. In this image: tiny Cabernet Sauvignon vines getting a much-needed drink of water after being scanned.&lt;/p&gt;
+
+&lt;p&gt;&lt;img class=&quot;center&quot; src=&quot;/images/paris-map-dress/grapevine.jpg&quot; width=&quot;50%&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Now that we have our own tiny (and irradiated) grapevines, we’ve been meaning to go visit some grapevines for a while. Tromping through vineyards tasting Petite Sirahs seemed like the right opportunity for this dress!&lt;/p&gt;
+
+&lt;p&gt;&lt;img class=&quot;center&quot; src=&quot;/images/paris-map-dress/side.jpg&quot; width=&quot;75%&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The bodice is By Hand London’s princess-seamed &lt;a href=&quot;http://byhandlondon.com/products/kim-dress&quot;&gt;Kim dress&lt;/a&gt;. I haven’t tried either of the skirt variations that come with the Kim, but I’m hoping to make up the tulip skirt variation soon. I love the shape of this bodice, but getting princess seams to fit right is harder than I’d expected.&lt;/p&gt;
+
+&lt;p&gt;The skirt’s a self-drafted half-circle with pockets. I’d made this exact dress before, for my (as-yet unblogged) galaxy print dress, in case the pattern looks familiar. I’d intended the galaxy print dress to be a wearable muslin/trial for this one, but I think I like both equally!&lt;/p&gt;
+
+&lt;p&gt;I didn’t really bother with pattern matching, partly because I was running out of fabric, partly because the pattern’s too busy for it to matter, and partly because I’m just super lazy.&lt;/p&gt;
+
+&lt;p&gt;&lt;img class=&quot;center&quot; src=&quot;/images/paris-map-dress/back.jpg&quot; width=&quot;60%&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The left strap still ended up a bit too long; I wonder if my shoulders are sloped asymmetrically, and that left shoulder just drops more than the other.&lt;/p&gt;
+
+&lt;p&gt;I’ve worn this a couple of times now, both with and without a belt at the waist. This photo’s from a hike through Muir Woods – the bear does not appear to approve of wandering through the woods in an overwhelmingly twee dress.&lt;/p&gt;
+
+&lt;p&gt;&lt;img class=&quot;center&quot; src=&quot;/images/paris-map-dress/bear.jpg&quot; width=&quot;60%&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;adjustments&quot;&gt;Adjustments&lt;/h2&gt;
+
+&lt;p&gt;I did my usual alterations on the bodice: a 1.5” FBA, a 1” wedge out of the upper back, shortened the straps, shortened the bodice, did a sway back adjustment, and took in the waist seams a little. Whew, that’s a mouthful!&lt;/p&gt;
+
+&lt;p&gt;The construction of the top was really fun, and awfully similar to the Elisalex construction. I ended up machine sewing the lining to the zipper, following &lt;a href=&quot;http://sewaholic.net/sewing-the-lining-into-the-cambie-dress/&quot;&gt;Tasia’s tutorial for the Cambie dress&lt;/a&gt;, and hand-sewed the bottom of the lining to the dress.&lt;/p&gt;
+
+&lt;p&gt;The rest of the construction isn’t that interesting – all exposed seams are serged. For once, the invisible zipper actually meets across the waistband perfectly! Too bad the print’s so busy that isn’t noticable.&lt;/p&gt;
+
+&lt;p&gt;&lt;img class=&quot;center&quot; src=&quot;/images/paris-map-dress/light.jpg&quot; width=&quot;75%&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;I’m a little displeased with the fit of this dress. I think I actually did a better job on the fit with the galaxy dress, since I took a lot more care to get that just right, and didn’t transfer all my adjustments to paper. There’s a lot of odd pulling/lines at the bust. I think the curve of the princess seams isn’t quite right, and might take a little more futzing with before it fits well.&lt;/p&gt;
+
+&lt;p&gt;&lt;img class=&quot;center&quot; src=&quot;/images/paris-map-dress/front.jpg&quot; width=&quot;75%&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Until then, though, I’m fairly happy with this. I’ve made better-fitting dresses, but this one has the tiniest Arcs de Triomphe on it.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Fabric&lt;/strong&gt; //&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;2.5 yards of “Out to Sea” by Sarah Jane for Michael Miller&lt;/li&gt;
+  &lt;li&gt;0.5 yards of white cotton lawn for lining.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Pattern&lt;/strong&gt; // &lt;a href=&quot;http://byhandlondon.com/products/kim-dress&quot;&gt;By Hand London’s Kim dress&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Sizing&lt;/strong&gt; //
+I cut a size 10, then did my usual adjustments.&lt;/p&gt;
+</description>
+        <pubDate>Fri, 04 Sep 2015 00:00:00 -0700</pubDate>
+        <link>http://www.kiranbot.com/paris-map-dress</link>
+        <guid isPermaLink="true">http://www.kiranbot.com/paris-map-dress</guid>
+        
+        <category>sewing</category>
+        
+        <category>by-hand-london</category>
+        
+        <category>kim</category>
+        
+        
+        <category>sewing</category>
+        
+      </item>
+    
+      <item>
+        <title>A Wifi Primer</title>
+        <description>&lt;p&gt;Wifi’s become ubiquitous in the last 15 years. The first 802.11 wifi standard was published by the IEEE in 1997, and was specified with a maximum speed of 2 Mbps. Since then, we’ve seen astronomical increases in speed – the latest amendment to the wifi protocol, 802.11ac, has a &lt;em&gt;theoretical&lt;/em&gt; upper speed of 3.39 Gbps to one station.&lt;/p&gt;
+
+&lt;p&gt;We talk a lot about Moore’s law doubling transistor density on processors every year, but we’ve seen a 1,700-fold increase in the information density we can squeeze out of the air!&lt;/p&gt;
+
+&lt;h1 id=&quot;an-overview&quot;&gt;An Overview&lt;/h1&gt;
+
+&lt;p&gt;A 20,000-foot overview of how the whole process works:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/wifi/overview.png&quot; title=&quot;Overview&quot; /&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;First, the wireless transmitter attempts to compress the data. For an overview of how compression works, &lt;a href=&quot;http://jvns.ca/blog/2015/02/22/how-gzip-uses-huffman-coding/&quot;&gt;Julia’s blog post about gzip and Huffman codes&lt;/a&gt; is a great place to start!&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Next, the transmitter adds redundancy to the compressed sequence with error-correcting codes. The simplest code imaginable is kind of a reverse compression – you repeat yourself 3 times, and the receiver takes the 2 that match.  In reality, though, this isn’t quite the same as uncompressing the data – most error correcting codes rely on a series of increasingly complicated checksums to make this happen. If you’d like to read more about fancy error correcting codes, look into &lt;a href=&quot;https://en.wikipedia.org/wiki/Turbo_code&quot;&gt;turbo codes&lt;/a&gt; or &lt;a href=&quot;https://en.wikipedia.org/wiki/Low-density_parity-check_code&quot;&gt;LPDC (low-density parity-check codes)&lt;/a&gt;! They’re pretty fancy. A warning – the Wikipedia pages are a little too full of jargon.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;The transmitter then translates the series of bits generated into radio waves. This process is called modulation, and is one of the most dramatic ways that wifi protocols have gotten faster in the last few years.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Now that you have your radio waves, you can shoot them over the air! Keep in mind, though, that the air is noisy – we’re constantly surrounded by noise and interference, both from household appliances (microwave ovens are particularly noisome), and from other wifi routers in the vicinity.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Finally: Once the receiver gets the signal, it repeats the entire process in reverse, and hopefully has usable data! If not, the receiver can renegotiate how it’s sending the signal to be more robust to noise, and start the process again. This process of negotiating communication protocols is called &lt;a href=&quot;http://www.telecomabc.com/l/link-adaptation.html&quot;&gt;link adaptation&lt;/a&gt; – in newer wifi protocols, there’s a &lt;a href=&quot;https://en.wikipedia.org/wiki/IEEE_802.11n-2009#Data_rates&quot;&gt;code to determine which combination of encodings&lt;/a&gt; you’re using!&lt;/p&gt;
+
+&lt;p&gt;The compression and channel coding methods have optimized far enough that there’s not much room for improvement. However, there’s been a lot of advances in how the modulation and transmission techniques, partly due to advances in transmit/receive hardware sensitivity and an increase in computational ability.&lt;/p&gt;
+
+&lt;h3 id=&quot;the-shannon-hartley-theorem&quot;&gt;The Shannon-Hartley Theorem&lt;/h3&gt;
+
+&lt;p&gt;Why can’t you keep cramming more information into the air? There are a few fundamental physical limits that determine how much information a physical channel can hold, described by the Shannon-Hartley theorem.&lt;/p&gt;
+
+&lt;p&gt;This theorem says that, for a given degree of noise contamination, there is a maximum rate of digital data that we can communicate nearly error-free through the channel. (Note: the “error-free” comes from error-correcting codes!)&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/wifi/shannon-hartley.png&quot; title=&quot;Shannon-Hartley theorem&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The channel’s information capacity depends on the bandwidth of the channel you’re using – how many different frequencies you can talk over. It also depends on the signal-to-noise ratio, which is the ratio of the transmitted signal’s power to the background noise’s power. New wifi protocols have squeezed out more performance from both of these variables.&lt;/p&gt;
+
+&lt;p&gt;Tune in next week for more information about improving bandwidth performance with ~&lt;em&gt;fancy&lt;/em&gt;~ modulation tricks (with no little thanks to more sensitive receivers!)&lt;/p&gt;
+</description>
+        <pubDate>Wed, 24 Jun 2015 00:00:00 -0700</pubDate>
+        <link>http://www.kiranbot.com/wifi-primer</link>
+        <guid isPermaLink="true">http://www.kiranbot.com/wifi-primer</guid>
+        
+        <category>wifi</category>
+        
+        <category>networks</category>
+        
+        
+        <category>computers</category>
+        
+      </item>
+    
+  </channel>
+</rss>
