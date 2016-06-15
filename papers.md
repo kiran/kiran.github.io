@@ -54,3 +54,10 @@ I'm trying to read papers more regularly. Here's a list of what I've read so far
 
   tl;dr: Millwheel operates on streaming data, and keeps centrally recorded metrics (watermarks) of how complete a subsystem's data is for a certain period of time (ie, "I've probably seen all data from 00:00 to 00:05, since I know all downstream systems have finished outputting results up to 0:05.").
 
+- "Programming As Theory Building", Peter Naur. [[pdf]](http://pages.cs.wisc.edu/~remzi/Naur.pdf)
+
+  tl;dr: 
+
+- "Architecture of a Database System", Hellerstein, Stonebraker, Hamilton, 2007. [[pdf]](http://www.comp.nus.edu.sg/~cs5226/papers/db-architecture-2007.pdf)
+
+  tl;dr:

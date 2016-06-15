@@ -7,7 +7,6 @@ category: programming
 tags: [programming]
 ---
 
-I realized that I'm not very good
 Important concepts of GC as they relate to Ruby/Python
 
 A garbage collector attempts to free memory occupied by objects that are no longer used by the program.
