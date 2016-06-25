@@ -37,6 +37,9 @@ Rows in scuba are sharded randomly (!), which was kind of surprising to me.
 This load balancing is likely inspired by https://www.eecs.harvard.edu/~michaelm/postscripts/mythesis.pdf
 
 Aggregation of this data happens when you query it. I guess this is the ~one use case where your writes are likely to outweigh your reads significantly?
+This is also possible because they're okay dropping data on some machines.
+
+they're sending data out in batches, so you might miss specific _batches_ of data. You're not dropping random batches.
 
 ## data ingestion path
 
@@ -60,6 +63,8 @@ the aggregator and the leaf nodes have a 10ms timeout. (not sure if that incl ti
 there's a separate service that maintains the approx count of rows across all leaves, so once your query completes, you check against that service, and that gives you the ballpark harvest of that query
 
 there are no indexes, but you do specify a time range on all your queries, and that timestamp ordering is the only data indexing in scuba
+
+interesting that SQL is the query mechanism
 
 ## fault tolerance
 
